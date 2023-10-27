@@ -9,11 +9,11 @@
             <a href='/post/{{post.slug}}'>{{ post.title }}</a>
         </p>
     </div>
-    <div class='card-body' style='background-color:#ffffff'>
+    <!-- <div class='card-body' style='background-color:#ffffff'>
         <p>
-            {{ post.body | truncatechars:40 }}
+            {{ post.body | truncatechars:0 }}
         </p>
-    </div>
+    </div> -->
     <div class='card-footer'  style='background-color:#ffffff'>
         <p>
             發佈時間：{{ post.pub_date | date:"Y M d, h a m:s "}}

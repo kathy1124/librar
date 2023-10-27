@@ -4,19 +4,19 @@
 {% block content%}
 {% for post in posts %}
 <div class='card'>
-    <div class='card-header'>
-        <p style='font-family:微軟正黑體;font-size:14pt;font-weight:bold;'>
-            <a href='/post/{{post.slug}}'>{{ post.title }}</a>
-        </p>
+    <div class='card-header' style='background-color:#ffffff'>
+            <p style='font-family:微軟正黑體;font-size:16pt;font-weight:bold;'>
+                <a href='/post/{{post.slug}}' style="text-decoration:none; color:#000000">{{ post.title }}</a>
+            </p>
     </div>
     <!-- <div class='card-body' style='background-color:#ffffff'>
         <p>
             {{ post.body | truncatechars:0 }}
         </p>
     </div> -->
-    <div class='card-footer'  style='background-color:#ffffff'>
+    <div class='card-footer'  style='background-color:#11002a'>
         <p>
-            發佈時間：{{ post.pub_date | date:"Y M d, h a m:s "}}
+            <a style=" color:#ffffff">發佈時間：{{ post.pub_date | date:"Y M d, h a m:s "}}</a>
         </p>
     </div>
 </div>

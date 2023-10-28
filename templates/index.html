@@ -9,14 +9,15 @@
                 <a href='/post/{{post.slug}}' style="text-decoration:none; color:#000000">{{ post.title }}</a>
             </p>
     </div>
-    <!-- <div class='card-body' style='background-color:#ffffff'>
+    <div class='card-body' style='background-color:#ffffff'>
         <p>
-            {{ post.body | truncatechars:0 }}
+            {{ post.body | striptags | truncatechars:4}}
+            <!-- {{ post.body | truncatechars:40}} -->
         </p>
-    </div> -->
+    </div>
     <div class='card-footer'  style='background-color:#11002a'>
         <p>
-            <a style=" color:#ffffff">發佈時間：{{ post.pub_date | date:"Y M d, h a m:s "}}</a>
+            <a style=" color:#ffffff">出版日期：{{ post.pub_date | date:"Y/m/d"}}</a>
         </p>
     </div>
 </div>

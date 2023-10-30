@@ -6,7 +6,7 @@
 <div class='card'>
     <div class='card-header' style='background-color:#ffffff'>
             <p style='font-family:微軟正黑體;font-size:16pt;font-weight:bold;'>
-                <a href='/post/{{post.slug}}' style="text-decoration:none; color:#000000">{{ post.title }}</a>
+                <a href='/post/{{post.slug}}' style="text-decoration:none; color:#283a78" >{{ post.title }}</a>
             </p>
     </div>
     <div class='card-body' style='background-color:#ffffff'>
@@ -15,7 +15,7 @@
             <!-- {{ post.body | truncatechars:40}} -->
         </p>
     </div>
-    <div class='card-footer'  style='background-color:#11002a'>
+    <div class='card-footer'  style='background-color:#07184f'>
         <p>
             <a style=" color:#ffffff">出版日期：{{ post.pub_date | date:"Y/m/d"}}</a>
         </p>
@@ -24,4 +24,3 @@
 <br>  <!--空一行-->
 {% endfor %}
 {% endblock %}
-

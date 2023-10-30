@@ -1,12 +1,20 @@
 <!-- header.html -->
 {% load static %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-1 col-md-1 ">   
-            <img src="{% static "images/girl.jpg" %}" height='70px'>
-        </div>
-        <div class="col-sm-11 col-md-11"> 
-            <h1 style="font-family:微軟正黑體;">Welcome to our library</h1>
-        </div>
+  <div class="row">
+    <div class="col-sm-1 col-md-1">
+      <img src="{% static "images/girl.jpg" %}" height='70px'>
     </div>
+    <div class="col-sm-8 col-md-8">
+      <h1 style="font-family: 微軟正黑體">Welcome to our library</h1>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <title>搜尋按鈕</title>
+        <form action="/search" method="get">
+          <input type="text" name="q" placeholder="輸入關鍵字" />
+          <input type="submit" value="搜尋" />
+        </form>
+    </div>
+    </div>
+  </div>
 </div>

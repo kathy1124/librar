@@ -18,3 +18,6 @@ def showpost(request, slug):
             return redirect("/")
     except:
         return redirect("/")
+    
+def login(request):
+    return render(request, 'login.html')

@@ -23,5 +23,6 @@ urlpatterns = [
     path('',mv.homepage, name='homepage'),
     path('post/<slug:slug>/', mv.showpost, name="showpost"),
     path('login/', mv.login),
-    path('books/',mv.books)
+    path('books/',mv.books),
+    path('seat/',mv.seat),
 ]

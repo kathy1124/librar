@@ -1,0 +1,123 @@
+<!DOCTYPE html>   
+<html>   
+<head>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title> Seat Page </title>  
+<style> 
+
+body {
+}
+.i-reserve .reserve-box {
+    width: 32%;
+    height: 155px;
+    border: 1px solid #5fc1da;
+    float: left;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f2f8fa;
+    background: -moz-linear-gradient(top, #f2f8fa 0%, #c9e6ee 100%);
+    background: -webkit-linear-gradient(top, #f2f8fa 0%,#c9e6ee 100%);
+    background: linear-gradient(to bottom, #f2f8fa 0%,#c9e6ee 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f8fa', endColorstr='#c9e6ee',GradientType=0 );
+}
+.main-right{
+    position: relative;
+}
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: "century gothic", "微軟正黑體";
+    # font-family: "century gothic", "新細明體";
+    font-size: 100%;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+div {
+    display: block;
+}
+
+</style>
+<div class="main-right">
+    <script>
+        document.title = "座位即時顯示狀態";/* 座位即時顯示狀態 */
+        function loadTop() {
+            document.getElementById("refreshbtn").disabled = "disabled";
+            document.getElementById("refreshbtn").innerHTML = "載入中";/* 載入中 */
+            $("div#all").load("showFullTop");
+        }
+    </script>
+    <noscript>你的瀏覽器不支援JavaScript!</noscript>
+    <!-- 中央內容區塊 -->
+    <div class="accesskey">
+        <a href="#altC" class="accessibility" accesskey="C" id="altC" title="跳到主要內容">:::</a>
+    </div>
+    <div id="all">
+        <div id="all_con">
+            
+                <div class="article">
+                   <!-- 線上預約 -->
+                   <a style="display: block;" title="空間座位管理系統(另開視窗)" href="http://seat.library.ntpc.gov.tw/" target="_blank"><h3 class="title" style="cursor: pointer;">空間座位管理系統</h3></a>
+                   <!-- 重新整理 -->
+                   <p class="renew-time">
+                       更新時間  2023/11/3 5:21:18 
+                       <a class="btn-auto" href="https://www.library.ntpc.gov.tw/showTop" title="重新整理" id="refreshbtn">
+                       重新整理</a>
+                   </p>
+                </div><!-- class="article" End -->				
+                
+                <div class="i-reserve">
+                        <div id="num" class="reserve-box">
+                            <!-- 4樓自修室 -->
+                            <h2>4樓自修室</h2>
+                            <h3>Self-study Room (4F) </h3>
+                            <h4><span class="red">96</span>/159</h4>
+                        </div>
+                        <div id="num" class="reserve-box">
+                            <!-- 5樓單人視聽區 -->
+                            <h2>5樓單人視聽區</h2>
+                            <h3>Audio area for Individual (5F) </h3>
+                            <h4><span class="red">12</span>/20</h4>
+                        </div> 
+                        <div id="num" class="reserve-box">
+                            <!-- 5樓雙人視聽區 -->
+                            <h2>5樓雙人視聽區</h2>
+                            <h3>Audio Area for two persons (5F) </h3> 
+                            <h4><span class="red">9</span>/12</h4>
+                        </div>
+                        <div id="num" class="reserve-box">
+                            <!-- 5樓團體視聽區 -->
+                            <h2>5樓團體視聽區</h2>
+                            <h3>Audio Area for Group(5F) </h3>
+                            <h4><span class="red">4</span>/4</h4>
+                        </div>      
+                        <div id="num" class="reserve-box">
+                            <!-- 5樓資訊檢索與數位資源區 -->
+                            <h2>5樓資訊檢索與數位資源區</h2>
+                            <h3>Information Retrieval Area (5F) </h3>
+                            <h4><span class="red">24</span>/47</h4>
+                        </div>   
+                        <div id="num" class="reserve-box">
+                            <!-- 5樓多功能室 -->
+                            <h2>5樓多功能室</h2>
+                            <h3>Multifunction Area(5F) </h3>
+                            <h4><span class="red">2</span>/3</h4>
+                        </div>
+                        <div id="num" class="reserve-box">
+                            <!-- 5樓視聽小間 -->
+                            <h2>5樓視聽小間</h2>
+                            <h3>Audio Room (5F) </h3>
+                            <h4><span class="red">4</span>/4</h4>
+                        </div>
+                        <div id="num" class="reserve-box">
+                            <!-- 7F討論室 -->
+                            <h2>7F討論室</h2>
+                            <h3>Discussion Room (7F) </h3>
+                            <h4><span class="red">4</span>/5</h4>
+                        </div>
+                </div><!-- class="i-reserve" End -->
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

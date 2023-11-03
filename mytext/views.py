@@ -24,3 +24,6 @@ def login(request):
 
 def books(request):
     return render(request, 'books.html')
+
+def seat(request):
+    return render(request, 'seat.html')

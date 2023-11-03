@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+#container {
+    margin-top:200px;
+    margin-left:30%;
+    margin-right:auto;
+    margin-bottom:20px;
+    }
+</style>
+</head>
+<body>
+    <div  id="container">
+        <h2>Books</h2>
+        <input type="text" id="myInput" style="width:60%;" onkeyup="myFunction()" placeholder="Search for book names.." title="Type in a name">
+        <table id="myTable"  style="width:60%;">
+            <tr class="header">
+                <th style="width:60%;">Author</th>
+                <th style="width:40%;">Book Name</th>
+            </tr>
+            <tr>
+                <td>伊索</td>
+                <td>狼來了</td>
+            </tr>
+            <tr>
+                <td>雅各布·格林、威廉·格林</td>
+                <td>青蛙王子</td>
+            </tr>
+            <tr>
+                <td>夏爾·佩羅</td>
+                <td>灰姑娘 </td>
+            </tr>
+            <tr> 
+                <td>雅各布·格林、威廉·格林</td>
+                <td>白雪公主</td>
+            </tr>
+            <tr> 
+                <td>雅各布·格林、威廉·格林</td>
+                <td>小紅帽 </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
+    </script>
+</body>
+</html>

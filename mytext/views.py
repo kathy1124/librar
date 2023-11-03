@@ -21,3 +21,6 @@ def showpost(request, slug):
     
 def login(request):
     return render(request, 'login.html')
+
+def books(request):
+    return render(request, 'books.html')

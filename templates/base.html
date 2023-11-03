@@ -33,6 +33,27 @@
       a:active {
         color: rgb(155, 196, 196);
       }
+      {% comment %} top button {% endcomment %}
+      #myBtn {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: red;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 4px;
+      }
+      
+      #myBtn:hover {
+        background-color: #555;
+      }
+      
     </style>
     <script
       type="text/javascript"
@@ -40,12 +61,25 @@
     ></script>
   </head>
   <body style="background-color: rgb(207, 233, 243)">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="#">upgrade your browser</a> to improve your experience.
-      </p>
-    <![endif]-->
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <script>
+      // Get the button
+      let mybutton = document.getElementById("myBtn");
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function() {scrollFunction()};
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      }
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
     <div class="container-fluid" >
       {% include 'header.html' %}
       <div class="row">
@@ -62,7 +96,7 @@
                 <a href="/login/" class="list-group-item">Login</a>
                 <a href="/books/" class="list-group-item">Look for Books</a>
                 <a href="https://tpml.gov.taipei/" class="list-group-item">台北市立圖書館</a>
-                <br />
+                <br/>
                 <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
                   <a class="a2a_button_facebook"></a>
                   <a class="a2a_button_twitter"></a>
@@ -72,6 +106,19 @@
                   <a class="a2a_button_email"></a>
                 </div>
               </div>
+            </div>
+          </div>
+          <p>
+          <div class="card">
+            <div class="card-header">
+              <h3>組員</h3>
+            </div>
+            <div class="card-body">
+              <a>11056018 楊凱恩</a>
+              <br>
+              <a>11056023 郭育綺</a><br>
+              <a>11056037 鄭宜心</a>
+              <br/>
             </div>
           </div>
           {% load static %}

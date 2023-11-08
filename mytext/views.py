@@ -27,3 +27,6 @@ def books(request):
 
 def seat(request):
     return render(request, 'seat.html')
+
+def reserve(request):
+    return render(request, 'reserve.html')

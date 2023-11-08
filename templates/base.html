@@ -59,8 +59,24 @@
           cursor: pointer;
           transition: 0.3s;
       }
-      img:hover {opacity: 0.7;}
-
+      img:hover {
+        animation: shake 0.5s;
+        animation-iteration-count: infinite;
+      }
+      
+      @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+      }
       #image-viewer {
           display: none;
           position: fixed;
@@ -214,11 +230,7 @@
               <a href="https://www.books.com.tw/products/0010960530"><img src="{% static "images/8R40.gif" %}" width="150" height="200"></a>
               <a href="https://www.books.com.tw/products/0010467655"><img src="{% static "images/phqozkg_460x580.jpg" %}" width="150" height="200"></a>
               <a href="https://www.books.com.tw/products/0010644077"><img src="{% static "images/8R19.gif" %}" width="150" height="200"></a>
-              
-              
-              {% comment %} <img src="{% static "images/000001_1586941279.jpg" %}" width="300" height="400"> {% endcomment %}
-              
-            </div>
+          </div>
             
             <div id="image-viewer">
               <span class="close">&times;</span>

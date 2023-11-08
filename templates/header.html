@@ -2,19 +2,30 @@
 {% load static %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-1 col-md-1">
-      <img src="{% static "images/girl.jpg" %}" height='70px'>
-    </div>
-    <div class="col-sm-8 col-md-8">
+    <div class="col-sm-3 col-md-3">
       <h1 style="font-family:Arial, Helvetica, sans-serif">Welcome to our library</h1>
     </div>
-    <div class="col-sm-3 col-md-3">
-        <title>搜尋按鈕</title>
-        <form action="/search" method="get">
-          <input type="text" name="q" placeholder="輸入關鍵字" />
-          <input type="submit" value="搜尋" />
-        </form>
+    <div class="col-sm-7 col-md-7">
+      <br>
+      <div id=myText2></div>
+      <script>
+      text="📖歡迎光臨圖書館!! ⭕今日營業時間 9:00 ❌閉館時間 22:00 ";
+      function showMovingText(){
+        var n = text.length;
+        text = text.substr(1, n-1)+text.substr(0, 1);		// 將第一個字搬到最後面
+        document.getElementById("myText2").innerHTML = text;	// 設定至 <div> 標籤內文
+        window.status = text;					// 設定至狀態列
+        setTimeout("showMovingText()", 400);			// 0.4 秒閃一遍
+      }
+      showMovingText();
+      </script>
     </div>
+    <div class="col-sm-2 col-md-2">
+      <title>搜尋按鈕</title>
+        <form action="/search" method="get">
+            <input type="text" name="q" placeholder="輸入關鍵字" />
+            <input type="submit" value="搜尋" />
+        </form>
     </div>
   </div>
 </div>

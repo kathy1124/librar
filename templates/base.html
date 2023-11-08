@@ -53,7 +53,62 @@
       #myBtn:hover {
         background-color: #555;
       }
+      {% comment %} photo {% endcomment %}
+      img {
+          border-radius: 5px;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+      img:hover {opacity: 0.7;}
+
+      #image-viewer {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          padding-top: 100px;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgb(0,0,0);
+          background-color: rgba(0,0,0,0.9);
+      }
+      .modal-content {
+          margin: auto;
+          display: block;
+          width: 80%;
+          max-width: 700px;
+      }
+      .modal-content { 
+          animation-name: zoom;
+          animation-duration: 0.6s;
+      }
+      @keyframes zoom {
+          from {transform:scale(0)} 
+          to {transform:scale(1)}
+      }
+      #image-viewer .close {
+          position: absolute;
+          top: 15px;
+          right: 35px;
+          color: #f1f1f1;
+          font-size: 40px;
+          font-weight: bold;
+          transition: 0.3s;
+      }
+      #image-viewer .close:hover,
+      #image-viewer .close:focus {
+          color: #bbb;
+          text-decoration: none;
+          cursor: pointer;
+      }
       
+      @media only screen and (max-width: 700px){
+          .modal-content {
+              width: 100%;
+          }
+      }
     </style>
     <script
       type="text/javascript"
@@ -86,6 +141,18 @@
         <div class="col-sm-3 col-md-3">
           <!--1️⃣-->
           <!--1️⃣+2️⃣=12-->
+          <script>
+            function showTime(){
+              date=new Date();
+              document.getElementById("theText").value=date.toLocaleString();
+            }
+            setInterval("showTime()", 1000);		//每一秒更新一次
+            </script>
+            <form>
+            目前時間：<input type="text" id=theText size=30>
+            </form>
+            </center>
+            <br>
           <div class="card">
             <div class="card-header">
               <h3>MENU</h3>
@@ -136,8 +203,30 @@
             <div class="card-body">{% block content %} {% endblock %}</div>
             <div class="card-footer">{% include 'footer.html' %}</div>
           </div>
+          <br>
+          <div class="images">
+            <h3> ✨✨✨新書推薦✨✨✨</h3><br>
+              <a href="https://www.books.com.tw/products/0010717170"><img  src="{% static "images/cfjdpf.jpg" %}"  width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010751025"><img src="{% static "images/149.jpg" %}" width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010687123"><img src="{% static "images/OSGcfjOEsz2MjCyb-ocCRA.jpg" %}" width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010223164"><img src="{% static "images/3da0c9c0ec07ff6cd62be5675a507273.jpg" %}" width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010443908"><img src="{% static "images/8R41.gif" %}" width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010960530"><img src="{% static "images/8R40.gif" %}" width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010467655"><img src="{% static "images/phqozkg_460x580.jpg" %}" width="150" height="200"></a>
+              <a href="https://www.books.com.tw/products/0010644077"><img src="{% static "images/8R19.gif" %}" width="150" height="200"></a>
+              
+              
+              {% comment %} <img src="{% static "images/000001_1586941279.jpg" %}" width="300" height="400"> {% endcomment %}
+              
+            </div>
+            
+            <div id="image-viewer">
+              <span class="close">&times;</span>
+              <img class="modal-content" id="full-image">
+            </div>
         </div>
       </div>
+
     </div>
     <script src="" async defer></script>
     <script

@@ -1,4 +1,33 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>座位管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>座位管理系统</h1>
+    <div class="seating-plan">
+        <div class="row">
+            <div class="seat">1</div>
+            <div class="seat">2</div>
+            <div class="seat">3</div>
+            <!-- 添加更多座位 -->
+        </div>
+        <div class="row">
+            <div class="seat">4</div>
+            <div class="seat">5</div>
+            <div class="seat">6</div>
+            <!-- 添加更多座位 -->
+        </div>
+        <!-- 添加更多行和座位 -->
+    </div>
+    <button id="book-seat">預訂座位</button>
+</body>
+</html>
+
+{% comment %} <!DOCTYPE html>   
 <html>   
 <head>  
 <meta name="viewport" content="width=device-width, initial-scale=1">  
@@ -62,23 +91,10 @@ button {
             $("div#all").load("showFullTop");
         }
     </script>
-    <noscript>你的瀏覽器不支援JavaScript!</noscript>
     <!-- 中央內容區塊 -->
-    <div class="accesskey">
-        <a href="#altC" class="accessibility" accesskey="C" id="altC" title="跳到主要內容">:::</a>
-    </div>
     <div id="all">
         <div id="all_con">
-            
                 <div class="article">
-                   <!-- 線上預約 -->
-                   <a style="display: block;" title="空間座位管理系統(另開視窗)" href="http://seat.library.ntpc.gov.tw/" target="_blank"><h3 class="title" style="cursor: pointer;">空間座位管理系統</h3></a>
-                   <!-- 重新整理 -->
-                   <p class="renew-time">
-                       更新時間  2023/11/3 5:21:18 
-                       <a class="btn-auto" href="https://www.library.ntpc.gov.tw/showTop" title="重新整理" id="refreshbtn">
-                       重新整理</a>
-                   </p>
                    <button  type="button" class='cancelbtn'><a class="Login" href='/' style="text-decoration:none"; >Home</a></button>
                 </div><!-- class="article" End -->				
                 
@@ -135,4 +151,4 @@ button {
             <div class="clear"></div>
         </div>
     </div>
-</div>
+</div>  {% endcomment %}

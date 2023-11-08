@@ -117,6 +117,12 @@ hr {
 div {
     display: block;
 }
+
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: lightblue;
+  }
 </style>
 <body>
 
@@ -140,7 +146,8 @@ div {
         <h2>6樓視聽區</h2>
         <h4><span class="red">9</span>/12</h4>
     </div>
-    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button>
+    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">預約</button>
+    <button  type="button" class='cancelbtn'><a class="Login" href='/' style="text-decoration:none"; >Home</a></button>
 
 
 
@@ -175,7 +182,7 @@ div {
 
       <div class="clearfix">
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signupbtn">Sign Up</button>
+        <button type="submit" class="signupbtn">預約</button>
       </div>
     </div>
   </form>

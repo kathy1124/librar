@@ -25,4 +25,6 @@ urlpatterns = [
     path('login/', mv.login),
     path('books/',mv.books),
     path('seat/',mv.seat),
+    path('post', mv.show_all_post, name="show_all_post"),
+    path('post/<int:post_id>/comments', mv.show_comments, name='show-comments')
 ]

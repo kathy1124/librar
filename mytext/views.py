@@ -2,6 +2,7 @@ from django.shortcuts import render
 from mytext.models import Post
 from datetime import datetime
 from django.shortcuts import redirect
+from django.http import HttpResponse
 
 # Create your views here.
 def homepage(request):
@@ -19,6 +20,15 @@ def showpost(request, slug):
     except:
         return redirect("/")
     
+def show_all_post(request):
+    post = Post.objects.all()
+    return render(request, 'article_list.html', locals())
+
+def show_comments(request, post_id):
+    #comments = Comment.objects.filter(post=post_id)
+    comments = Post.objects.get(id=post_id).comment_set.all()
+    return render(request, 'comments.html', locals()) 
+
 def login(request):
     return render(request, 'login.html')
 

@@ -4,20 +4,24 @@
 {% block content %}
 {% for post in post %}
 {% if forloop.first %}
-<table>
-    <tr background="#ffffff">
-        <th>Title</th>
-        <th>Slug</th>
-        <th>pub date</th>
-        <th>comments</th>
-    </tr>
+<table class="table table-hover">
+    <thead>
+        <tr background="#ffffff">
+            <th scope="col">Title</th>
+            <th scope="col">Slug</th>
+            <th scope="col">pub date</th>
+            <th scope="col">comments</th>
+        </tr>
+    </thead>
 {% endif %}
-    <tr background="#fffccf">
-        <td>{{ post.title }}</td>
-        <td>{{ post.slug }}</td>
-        <td>{{ post.pub_date }}</td>
-        <td><a href="{% url 'show-comments' post.id %}"> views </a></td>
-    </tr>
+    <tbody>
+        <tr background="#fffccf">
+            <td>{{ post.title }}</td>
+            <td>{{ post.slug }}</td>
+            <td>{{ post.pub_date }}</td>
+            <td><a href="{% url 'show-comments' post.id %}"> views </a></td>
+        </tr>
+    </tbody>
 {% if forloop.last %}
 </table>
 {% endif %}

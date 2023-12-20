@@ -6,16 +6,20 @@
 {% block content %} 
 {% for c in comments %}
 {% if forloop.first %}
-<table>
-    <tr background="#cccccc">
-        <th>Text</th>
-        <th>pub data</th>
-    </tr>
+<table class="table table-hover">
+    <thead>
+        <tr background="#cccccc">
+            <th>Text</th>
+            <th>pub data</th>
+        </tr>
+    </thead>
 {% endif %}
-    <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
-        <td>{{ c.text }}</td>
-        <td>{{ c.pub_date }}</td>
-    </tr>
+    <tbody>
+        <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
+            <td>{{ c.text }}</td>
+            <td>{{ c.pub_date }}</td>
+        </tr>
+    </tbody>
 {% if forloop.last %}
 </table>
 {% endif %}

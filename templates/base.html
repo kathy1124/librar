@@ -175,8 +175,9 @@
             </div>
             <div class="card-body">
               <div class="list-group">
-                <a href="/" class="list-group-item">HOME</a>                
-                <a href="/login/" class="list-group-item">Login</a>
+                <a href="/" class="list-group-item">HOME</a>  
+                <a href="{% url 'login' %}" class="list-group-item">Login</a>      
+                <a href="{% url 'register' %}" class="list-group-item">Register</a>
                 <a href="/books/" class="list-group-item">Look for Books</a>
                 <a href="{% url 'show_all_post' %}" class="list-group-item">Article List</a>
                 <a href="/seat/" class="list-group-item">座位預約</a>

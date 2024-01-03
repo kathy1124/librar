@@ -18,14 +18,14 @@
         setTimeout("showMovingText()", 400);			// 0.4 秒閃一遍
       }
       showMovingText();
-      </script>
+      </script>  
+      {{useer_name}}
     </div>
-    <div class="col-sm-2 col-md-2">
-      <title>搜尋按鈕</title>
-        <form action="/search" method="get">
-            <input type="text" name="q" placeholder="輸入關鍵字" />
-            <input type="submit" value="搜尋" />
-        </form>
+    <div class="col-sm-1 col-md-1">
+      <a href="{% url 'login' %}" class="list-group-item">Login</a>  
+    </div>
+    <div class="col-sm-1 col-md-1">
+      <a href="{% url 'register' %}" class="list-group-item">Register</a>
     </div>
   </div>
 </div>

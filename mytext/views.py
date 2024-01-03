@@ -9,6 +9,10 @@ from mytext.forms import UserRegisterForm,LoginForm
 def homepage(request):
     posts = Post.objects.all()
     now = datetime.now()
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
     return render(request ,'index.html', locals())
 
 def showpost(request, slug):
@@ -60,7 +64,7 @@ def register(request):
                 message = f'註冊成功！'
             else:
                 message = f'兩次密碼不一致！'    
-        return render(request, 'register.html', locals())
+        return redirect('/login')
     else:
         message = "ERROR"
         return render(request, 'register.html', locals())
@@ -92,3 +96,20 @@ def login(request):
     else:
         message = "ERROR"
         return render(request, 'login.html', locals())
+    
+from mytext.filter import BookFilter
+ 
+def index(request):
+    books = Post.objects.all()
+ 
+    bookFilter = BookFilter(queryset=books)
+ 
+    if request.method == "POST":
+        bookFilter = BookFilter(request.POST, queryset=books)
+ 
+    context = {
+        'bookFilter': bookFilter
+    }
+ 
+    return render(request, 'search.html', context)
+

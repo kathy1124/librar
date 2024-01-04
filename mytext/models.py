@@ -7,11 +7,16 @@ class Post(models.Model):
         ('fairy tale', '童話'),
         ('comic', '漫畫'),
     )
+    CONDITION_CHOICES = (
+        ('loan','外借中'),
+        ('collection','館藏中'),
+        ('reserve','預約中')
+    )
     title = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)
     genre = models.CharField(max_length=200, choices=GENRE_CHOICES)
     author = models.CharField(max_length=50)
-    condition = models.CharField(max_length=20)  # 狀態（未借出、已借出、不外借、已預約）
+    condition = models.TextField()
     body = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     class Meta:

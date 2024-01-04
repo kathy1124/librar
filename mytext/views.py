@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mytext.models import Post
+from mytext.models import Post, Borrow_book
 from datetime import datetime
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -16,6 +16,10 @@ def homepage(request):
     return render(request ,'index.html', locals())
 
 def showpost(request, slug):
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
     post = Post.objects.get(slug=slug)
     try:
         if post != None:
@@ -26,10 +30,18 @@ def showpost(request, slug):
         return redirect("/")
     
 def show_all_post(request):
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
     post = Post.objects.all()
     return render(request, 'article_list.html', locals())
 
 def show_comments(request, post_id):
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
     #comments = Comment.objects.filter(post=post_id)
     comments = Post.objects.get(id=post_id).comment_set.all()
     return render(request, 'comments.html', locals()) 
@@ -88,6 +100,10 @@ def login(request):
 #搜尋
 from mytext.filter import BookFilter
 def index(request):
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
     books = Post.objects.all()
     bookFilter = BookFilter(queryset=books)
     if request.method == "POST":
@@ -95,7 +111,7 @@ def index(request):
     context = {
         'bookFilter': bookFilter
     }
-    return render(request, 'search.html', context)
+    return render(request, 'search.html', locals())
 
 #Books 狀態
 def books_condition(request):  
@@ -104,14 +120,13 @@ def books_condition(request):
     else:
         user_name="未登入"
     context = dict()
-    # context['readerID'] = request.session.get('readerID', None)
-    result = User.objects.filter(username=request.session.get('id'))
+    context['readerID'] = request.session.get('readerID', None)
+    result = User.objects.filter(username=request.session.get('readerID'))
     condition = []
     for b in result:
-        str()
         condition.append(
             {
-                'title': b.title.title,
+                'title': b.title.title if hasattr(b, 'title') and hasattr(b.title, 'title') else None,
                 'borrow_date': b.borrow_date,
                 'due_date': b.due_date,
                 'return_date': b.return_date
@@ -119,3 +134,22 @@ def books_condition(request):
         )
     context['condition'] = condition
     return render(request, 'condition.html', locals())
+
+# from django.utils import timezone
+# def borrowBook(request,readerID):
+#     if request.user.is_active:
+#         book = Post.objects.get(id=readerID,isOn=True)
+#         if book.available_quantity > 0:
+#             due_date = timezone.now() + timezone.timedelta(days=90)
+#             borrowing_record = Borrow_book.objects.create(
+#                 user=request.user, 
+#                 book=book,
+#                 borrowing_date=timezone.now(),
+#                 due_date=due_date,
+#                 is_returned=False, 
+#             )
+#             book.available_quantity -= 1
+#             book.save()
+#             return render(request, 'a.html', {'borrowing_record': borrowing_record,'msg':'借閱成功！'})
+#         else:
+#             return render(request, 'a.html', {'msg': '圖書暫不可借'})

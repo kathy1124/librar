@@ -28,5 +28,6 @@ urlpatterns = [
     path('register/', mv.register, name= 'register'),
     path('login/',mv.login, name='login'),
     path('search/',mv.index, name='search'),
-    path('condition/',mv.books_condition,name='condition')
+    path('condition/',mv.books_condition,name='condition'),
+
 ]

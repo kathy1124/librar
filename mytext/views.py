@@ -104,7 +104,7 @@ def books_condition(request):
     else:
         user_name="未登入"
     context = dict()
-    context['readerID'] = request.session.get('readerID', None)
+    # context['readerID'] = request.session.get('readerID', None)
     result = User.objects.filter(username=request.session.get('id'))
     condition = []
     for b in result:
@@ -118,4 +118,4 @@ def books_condition(request):
             }
         )
     context['condition'] = condition
-    return render(request, 'condition.html', context=context)
+    return render(request, 'condition.html', locals())

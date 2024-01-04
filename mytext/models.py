@@ -14,8 +14,6 @@ class Post(models.Model):
     condition = models.CharField(max_length=20)  # 狀態（未借出、已借出、不外借、已預約）
     body = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
-
-
     class Meta:
         ordering = ('-pub_date',)
 

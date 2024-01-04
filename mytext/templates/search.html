@@ -2,7 +2,6 @@
 {% block headmessage %} <h2>搜尋書籍</h2> {% endblock headmessage %} 
 
 {% block content %}
- 
 <form method='POST'>
     {% csrf_token %}
     名稱：{{ bookFilter.form.title }}

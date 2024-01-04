@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %} 圖書狀態 {% endblock title %}
+{% block headmessage %} <h2>圖書狀態</h2>  {{user_name}} {% endblock headmessage %} 
+
+{% block content %}
+{% if books_condition is not None %}
+<table class="table">
+    <thead>
+        <tr>
+            <td>書名</td>
+            <td>借閱時間</td>
+            <td>到期時間</td>
+            <td>歸還日期</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in condition %}
+        <tr>
+            <td>b.title</td>
+            <td>b.borrow_date</td>
+            <td>b.due_date</td>
+            <td>b.return_date</td>
+            <td>
+                {% if b.return_date is not None %}
+                    {{ b.return_date }}
+                {% else %}
+                    尚未归还
+                {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    無借閱紀錄！
+{% endif %}
+
+{% endblock content %}

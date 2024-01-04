@@ -23,11 +23,10 @@ urlpatterns = [
     path('',mv.homepage, name='homepage'),
     path('post/<slug:slug>/', mv.showpost, name="showpost"),
     path('login/', mv.login),
-    path('books/',mv.books),
-    path('seat/',mv.seat),
     path('post', mv.show_all_post, name="show_all_post"),
     path('post/<int:post_id>/comments', mv.show_comments, name='show-comments'),
     path('register/', mv.register, name= 'register'),
     path('login/',mv.login, name='login'),
     path('search/',mv.index, name='search'),
+    path('condition/',mv.books_condition,name='condition')
 ]

@@ -34,18 +34,6 @@ def show_comments(request, post_id):
     comments = Post.objects.get(id=post_id).comment_set.all()
     return render(request, 'comments.html', locals()) 
 
-def login(request):
-    return render(request, 'login.html')
-
-def books(request):
-    return render(request, 'books.html')
-
-def seat(request):
-    return render(request, 'seat.html')
-
-def reserve(request):
-    return render(request, 'reserve.html')
-
 from django.contrib.auth.models import User
 #註冊
 def register(request):
@@ -97,19 +85,37 @@ def login(request):
         message = "ERROR"
         return render(request, 'login.html', locals())
     
+#搜尋
 from mytext.filter import BookFilter
- 
 def index(request):
     books = Post.objects.all()
- 
     bookFilter = BookFilter(queryset=books)
- 
     if request.method == "POST":
         bookFilter = BookFilter(request.POST, queryset=books)
- 
     context = {
         'bookFilter': bookFilter
     }
- 
     return render(request, 'search.html', context)
 
+#Books 狀態
+def books_condition(request):  
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
+    context = dict()
+    context['readerID'] = request.session.get('readerID', None)
+    result = User.objects.filter(username=request.session.get('id'))
+    condition = []
+    for b in result:
+        str()
+        condition.append(
+            {
+                'title': b.title.title,
+                'borrow_date': b.borrow_date,
+                'due_date': b.due_date,
+                'return_date': b.return_date
+            }
+        )
+    context['condition'] = condition
+    return render(request, 'condition.html', context=context)

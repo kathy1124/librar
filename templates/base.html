@@ -18,11 +18,11 @@
     />
     <style>
       .a:link {
-        color: #899baa;
+        color: #0da6da;
         text-decoration: underline;
       }
       a:visited {
-        color: #899baa;
+        color: #0e1a23;
       }
       a:hover {
         color: #d4a3c4;
@@ -178,17 +178,26 @@
                 <a href="/" class="list-group-item">HOME</a>  
                 <a href="{% url 'search' %}" class="list-group-item">搜尋書籍</a>
                 <a href="{% url 'show_all_post' %}" class="list-group-item">Article List</a>
-                <a href="https://tpml.gov.taipei/" class="list-group-item">台北市立圖書館</a>
-
                 <br/>
-                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-                  <a class="a2a_button_facebook"></a>
-                  <a class="a2a_button_twitter"></a>
-                  <a class="a2a_button_linkedin"></a>
-                  <a class="a2a_button_pinterest"></a>
-                  <a class="a2a_button_line"></a>
-                  <a class="a2a_button_email"></a>
-                </div>
+              </div>
+            </div>
+          </div>
+          <p>
+          <div class="card">
+            <div class="card-header">
+              <h3>其他連結</h3>
+            </div>
+            <div class="card-body">
+              <a href="https://tpml.gov.taipei/" class="list-group-item">台北市立圖書館</a>
+              <p>
+              <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                <a class="a2a_button_facebook"></a>
+                <a class="a2a_button_twitter"></a>
+                <a class="a2a_button_linkedin"></a>
+                <a class="a2a_button_pinterest"></a>
+                <a class="a2a_button_line"></a>
+                <a class="a2a_button_email"></a>
+                <br>
               </div>
             </div>
           </div>
@@ -202,7 +211,7 @@
               <br>
               <a>11056023 郭育綺</a><br>
               <a>11056037 鄭宜心</a>
-              <br/>
+              <br>
             </div>
           </div>
           {% load static %}

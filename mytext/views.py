@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mytext.models import Post, Borrow_book
+from mytext.models import Post,Borrow_book
 from datetime import datetime
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -69,7 +69,7 @@ def register(request):
         message = "ERROR"
         return render(request, 'register.html', locals())
     
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,logout
 from django.contrib import auth
 #登入
 def login(request):
@@ -97,6 +97,18 @@ def login(request):
         message = "ERROR"
         return render(request, 'login.html', locals())
     
+#登出
+def logouts(request):
+    logout(request)
+
+    return redirect('/')
+
+def identity(user):
+    if user.is_superuser:
+        return "管理員"
+    else:
+        return "使用者"
+
 #搜尋
 from mytext.filter import BookFilter
 def index(request):
@@ -135,21 +147,64 @@ def books_condition(request):
     context['condition'] = condition
     return render(request, 'condition.html', locals())
 
-# from django.utils import timezone
-# def borrowBook(request,readerID):
-#     if request.user.is_active:
-#         book = Post.objects.get(id=readerID,isOn=True)
-#         if book.available_quantity > 0:
-#             due_date = timezone.now() + timezone.timedelta(days=90)
-#             borrowing_record = Borrow_book.objects.create(
-#                 user=request.user, 
-#                 book=book,
-#                 borrowing_date=timezone.now(),
-#                 due_date=due_date,
-#                 is_returned=False, 
-#             )
-#             book.available_quantity -= 1
-#             book.save()
-#             return render(request, 'a.html', {'borrowing_record': borrowing_record,'msg':'借閱成功！'})
-#         else:
-#             return render(request, 'a.html', {'msg': '圖書暫不可借'})
+
+# # 借書
+# def borrow_book(request): 
+#     books = Post.objects.all()#把東西從資料庫抓出來
+#     if request.method == 'GET':
+#         return render(request,'borrow.html',locals())
+#     elif request.method =='POST':
+#         try:
+#             user_id = request.POST['user_id']
+#             user_post = request.POST['user_post']
+#             user_title = request.POST['user_title']
+#             books = Borrow_book.objects.get(status=user_title)
+#             post = Borrow_book(moods=user_title, nickname=user_id, message=user_post)#先把物件綁定到post裡面
+#             post.save()
+#             message = '成功借閱！'
+#             return render(request,'borrow.html',locals())
+#         except Exception as e:
+#             print(e)
+#             message = '出現錯誤'
+#             return render(request,'borrow.html',locals())
+#     else:
+#             message = 'post/get 出現錯誤'
+#             return render(request,'borrow.html',locals())
+    
+from django.utils import timezone
+def borrowBook(request, book_id):
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
+    if request.user.is_active:
+        book = Post.objects.get(id=book_id, isOn=True)
+        if book.available_quantity > 0:
+            due_date = timezone.now() + timezone.timedelta(days=40)
+            borrowing_record = Borrow_book.objects.create(
+                readerID=request.user, 
+                title=book,
+                borrow_date=timezone.now(),
+                due_date=due_date,
+                returned=False, 
+            )
+            book.available_quantity -= 1
+            book.save()
+            return render(request, 'borrow.html', {'borrowing_record': borrowing_record,'msg':'借閱成功！'})
+        else:
+            return render(request, 'borrow.html', {'msg': '圖書暫不可借'})
+    else:
+        return redirect('login')
+    
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def getBorrowListByUser(request):
+    if request.user.is_authenticated:
+        user_name = request.user.username
+    else:
+        user_name="未登入"
+    current_user = request.user
+    borrowList = Borrow_book.objects.filter(readerID=current_user).order_by('-borrow_date', '-returned')
+    identityName = identity(current_user)
+    return render(request, 'borrowbook.html', locals())

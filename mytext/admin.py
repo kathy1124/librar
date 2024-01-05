@@ -8,8 +8,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('text','pub_date', 'post')
 
 class Borrow_booksAdmin(admin.ModelAdmin):
-    list_display = ('readerID','title','borrow_date','due_date',"return_date")
-    
+    list_display = ('readerID','title','borrow_date','due_date',"returned")
+admin.site.register(Borrow_book, Borrow_booksAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Borrow_book, Borrow_booksAdmin)

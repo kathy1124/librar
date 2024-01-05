@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} 歡迎光臨 圖書館 {% endblock title %}
+{% block headmessage %} 借書 {% endblock headmessage %}
+{% block content %}
+{% for b in books %}
+{% if msg == "借閱成功！"%}
+<table class="table table-hover">
+    <thead>
+        <tr background="#cccccc">
+            <th>讀者姓名</th>
+            <th>借閱書籍</th>
+            <th>借閱日期</th>
+            <th>到期日期</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
+            <td>{{ Borrow_book.readerID }}</td>
+            <td>{{ Borrow_book.title }}</td>
+            <td>{{ Borrow_book.borrow_date }}</td>
+            <td>{{ Borrow_book.due_date }}</td>
+        </tr>
+    </tbody>
+{% else %}
+    <a>再借幾本書吧~</a>
+{% endif %}
+
+{% if forloop.last %}
+</table>
+
+{% endif %}
+{% endblock content %}

@@ -3,22 +3,24 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3 col-md-3">
-      <h1 style="font-family:Arial, Helvetica, sans-serif">Welcome to our library</h1>
+      <h1 style="font-family: Arial, Helvetica, sans-serif">
+        Welcome to our library
+      </h1>
     </div>
     <div class="col-sm-4 col-md-4">
-      <br>
-      <div id=myText2>
+      <br />
+      <div id="myText2">
         <script>
-        text="📖歡迎光臨圖書館!! ⭕今日營業時間 9:00 ❌閉館時間 22:00 ";
-        function showMovingText(){
-          var n = text.length;
-          text = text.substr(1, n-1)+text.substr(0, 1);		// 將第一個字搬到最後面
-          document.getElementById("myText2").innerHTML = text;	// 設定至 <div> 標籤內文
-          window.status = text;					// 設定至狀態列
-          setTimeout("showMovingText()", 400);			// 0.4 秒閃一遍
-        }
-        showMovingText();
-        </script>  
+          text = '📖歡迎光臨圖書館!! ⭕今日營業時間 9:00 ❌閉館時間 22:00 ';
+          function showMovingText() {
+            var n = text.length;
+            text = text.substr(1, n - 1) + text.substr(0, 1); // 將第一個字搬到最後面
+            document.getElementById('myText2').innerHTML = text; // 設定至 <div> 標籤內文
+            window.status = text; // 設定至狀態列
+            setTimeout('showMovingText()', 400); // 0.4 秒閃一遍
+          }
+          showMovingText();
+        </script>
       </div>
     </div>
     <div class="col-sm-2 col-md-2">
@@ -27,7 +29,7 @@
     </div>
     <div class="col-sm-1 col-md-1">
       <p></p>
-      <a href="{% url 'login' %}" class="list-group-item">Login</a>  
+      <button href="{% url 'login' %}" class="list-group-item">Login</button>
     </div>
     <div class="col-sm-1 col-md-1">
       <p></p>

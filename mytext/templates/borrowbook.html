@@ -1,31 +1,28 @@
-{% extends "base.html" %}
-{% block title %}歡迎光臨 圖書館{% endblock title %}
-{% block headmessage %}借書{% endblock headmessage %}
-{% block content %}
-{% if borrowList %}
-    <table class="table table-hover">
-        <thead>
-            <tr style="background-color: #cccccc;">
-                <th>讀者姓名</th>
-                <th>借閱書籍</th>
-                <th>借閱日期</th>
-                <th>到期日期</th>
-                <th>歸還狀態</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for borrowing_record in borrowList %}
-            <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
-                <td>{{ borrowing_record.readerID }}</td>
-                    <td>{{ borrowing_record.title }}</td>
-                    <td>{% now "Y-m-d" as current_datetime %}</td>
-                    <td>{{ borrowing_record.due_date }}</td>
-                    <td>{{ borrowing_record.returned }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% extends "base.html" %} {% block title %}歡迎光臨 圖書館{% endblock title %}
+{% block headmessage %}借閱紀錄{% endblock headmessage %} {% block content %}
+{%if borrowList %}
+<table class="table table-hover">
+  <thead>
+    <tr style="background-color: #cccccc">
+      <th>讀者姓名</th>
+      <th>借閱書籍</th>
+      <th>借閱日期</th>
+      <th>到期日期</th>
+      <th>歸還狀態</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for borrowing_record in borrowList %}
+    <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
+      <td>{{ borrowing_record.readerID }}</td>
+      <td>{{ borrowing_record.title }}</td>
+      <td>{% now "Y-m-d" as current_datetime %}</td>
+      <td>{{ borrowing_record.due_date }}</td>
+      <td>{{ borrowing_record.returned }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% else %}
-    <p>還沒有借閱紀錄喔~</p>
-{% endif %}
-{% endblock %}
+<p>還沒有借閱紀錄喔~</p>
+{% endif %} {% endblock %}

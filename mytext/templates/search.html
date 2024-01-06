@@ -1,31 +1,29 @@
-{% extends 'base.html' %}
-{% block headmessage %} <h2>搜尋書籍</h2> {% endblock headmessage %} 
-
-{% block content %}
-<form method='POST'>
-    {% csrf_token %}
-    名稱：{{ bookFilter.form.title }}
-    類型：{{ bookFilter.form.genre }}
-    作者：{{ bookFilter.form.author }}
-    <br>
-    <input type="submit" class="btn btn-outline-success" value="查詢">
-    <input type="reset" class="btn btn-outline-info" value="清除重填">
+{% extends 'base.html' %} {% block headmessage %}
+<h2>搜尋書籍</h2>
+{% endblock headmessage %} {% block content %}
+<form method="POST">
+  {% csrf_token %} 名稱：{{ bookFilter.form.title }} <br />
+  類型：{{bookFilter.form.genre }}<br />
+  作者：{{ bookFilter.form.author }}
+  <br />
+  <input type="submit" class="btn btn-outline-success" value="查詢" />
+  <input type="reset" class="btn btn-outline-info" value="清除重填" />
 </form>
 <br />
 <table class="table table-hover">
-    <thead>
-        <th>名稱</th>
-        <th>類型</th>
-        <th>作者</th>
-    </thead>
-    <tbody>
-        {% for book in bookFilter.qs %}
-        <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.get_genre_display }}</td>
-            <td>{{ book.author }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+  <thead>
+    <th>名稱</th>
+    <th>類型</th>
+    <th>作者</th>
+  </thead>
+  <tbody>
+    {% for book in bookFilter.qs %}
+    <tr>
+      <td>{{ book.title }}</td>
+      <td>{{ book.get_genre_display }}</td>
+      <td>{{ book.author }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
-{% endblock  %}
+{% endblock %}

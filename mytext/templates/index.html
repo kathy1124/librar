@@ -3,6 +3,22 @@
 {% block headmessage%} <h3 style='font-family:標楷體;'>本站藏書列表</a> {% endblock headmessage %}
 {% block content%}
 {% for post in posts %}
+<style>
+/* 借閱按鈕樣式 */
+.styled-button {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #5b7391;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+.styled-button:hover {
+    background-color: rgb(40, 40, 249);
+}
+</style>
 <div class='card'>
     <div class='card-header' style='background-color:#ffffff'>
             <p style='font-family:微軟正黑體;font-size:16pt;font-weight:bold;'>
@@ -11,13 +27,17 @@
     </div>
     <div class='card-body' style='background-color:#ffffff'>
         <p>
-            {{ post.body | striptags | truncatechars:4}}
-            <!-- {{ post.body | truncatechars:40}} -->
+            <p>作者 : {{post.author}}</p>
+            <p>類型 : {{post.genre}}</p>
+            <p>出版日期 : {{ post.pub_date | date:"Y/m/d"}}</p>
+            <button class="styled-button">借閱</button>
+            <!-- {{ post.body | striptags | truncatechars:4}}
+            {{ post.body | truncatechars:40}} -->
         </p>
     </div>
-    <div class='card-footer'  style='background-color:#07184f'>
+    <div class='card-footer'  style='background-color:#132254'>
         <p>
-            <a style=" color:#ffffff">出版日期：{{ post.pub_date | date:"Y/m/d"}}</a>
+            <a style=" color:#ffffff"></a>
         </p>
     </div>
 </div>

@@ -28,7 +28,7 @@ def showpost(request, slug):
             return redirect("/")
     except:
         return redirect("/")
-    
+
 def show_all_post(request):
     if request.user.is_authenticated:
         user_name = request.user.username
@@ -44,7 +44,7 @@ def show_comments(request, post_id):
         user_name="未登入"
     #comments = Comment.objects.filter(post=post_id)
     comments = Post.objects.get(id=post_id).comment_set.all()
-    return render(request, 'comments.html', locals()) 
+    return render(request, 'comments.html', locals())
 
 from django.contrib.auth.models import User
 #註冊
@@ -63,12 +63,12 @@ def register(request):
                 user = User.objects.create_user(user_name, user_email, user_password)
                 message = f'註冊成功！'
             else:
-                message = f'兩次密碼不一致！'    
+                message = f'兩次密碼不一致！'
         return redirect('/login')
     else:
         message = "ERROR"
         return render(request, 'register.html', locals())
-    
+
 from django.contrib.auth import authenticate,logout
 from django.contrib import auth
 #登入
@@ -96,7 +96,7 @@ def login(request):
     else:
         message = "ERROR"
         return render(request, 'login.html', locals())
-    
+
 #登出
 def logouts(request):
     logout(request)
@@ -126,7 +126,7 @@ def index(request):
     return render(request, 'search.html', locals())
 
 #Books 狀態
-def books_condition(request):  
+def books_condition(request):
     if request.user.is_authenticated:
         user_name = request.user.username
     else:
@@ -147,9 +147,8 @@ def books_condition(request):
     context['condition'] = condition
     return render(request, 'condition.html', locals())
 
-
 # # 借書
-# def borrow_book(request): 
+# def borrow_book(request):
 #     books = Post.objects.all()#把東西從資料庫抓出來
 #     if request.method == 'GET':
 #         return render(request,'borrow.html',locals())
@@ -170,7 +169,7 @@ def books_condition(request):
 #     else:
 #             message = 'post/get 出現錯誤'
 #             return render(request,'borrow.html',locals())
-    
+
 from django.utils import timezone
 def borrowBook(request, book_id):
     if request.user.is_authenticated:
@@ -182,11 +181,11 @@ def borrowBook(request, book_id):
         if book.available_quantity > 0:
             due_date = timezone.now() + timezone.timedelta(days=40)
             borrowing_record = Borrow_book.objects.create(
-                readerID=request.user, 
+                readerID=request.user,
                 title=book,
                 borrow_date=timezone.now(),
                 due_date=due_date,
-                returned=False, 
+                returned=False,
             )
             book.available_quantity -= 1
             book.save()
@@ -195,7 +194,7 @@ def borrowBook(request, book_id):
             return render(request, 'borrow.html', {'msg': '圖書暫不可借'})
     else:
         return redirect('login')
-    
+
 from django.contrib.auth.decorators import login_required
 
 @login_required

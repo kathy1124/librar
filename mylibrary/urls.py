@@ -30,7 +30,7 @@ urlpatterns = [
     path('logout/',mv.logouts, name='logout'),
     path('search/',mv.index, name='search'),
     path('condition/',mv.books_condition,name='condition'),
-    path('borrowBook/<int:book_id>',mv.borrowBook, name='borrowBook'),
+    path('borrowBook/<int:book_id>/borrow',mv.borrow_book, name='borrowBook'),
     path('borrowList/',mv.getBorrowListByUser,name='borrowList'),
     
 ]

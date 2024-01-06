@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %} 歡迎光臨 圖書館 {% endblock title %}
-{% block headmessage %} 借書 {% endblock headmessage %}
+{% block headmessage %} <h3>借書</h3> {% endblock headmessage %}
 {% block content %}
 {% for b in books %}
 {% if msg == "借閱成功！"%}
@@ -15,10 +15,10 @@
     </thead>
     <tbody>
         <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
-            <td>{{ Borrow_book.readerID }}</td>
-            <td>{{ Borrow_book.title }}</td>
-            <td>{{ Borrow_book.borrow_date }}</td>
-            <td>{{ Borrow_book.due_date }}</td>
+            <td>{{ b.readerID }}</td>
+            <td>{{ b.title }}</td>
+            <td>{{ b.borrow_date }}</td>
+            <td>{{ b.due_date }}</td>
         </tr>
     </tbody>
 {% else %}
@@ -27,6 +27,6 @@
 
 {% if forloop.last %}
 </table>
-
 {% endif %}
+{% endfor %}
 {% endblock content %}

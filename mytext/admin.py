@@ -2,7 +2,7 @@ from django.contrib import admin
 from mytext.models import Post, Comment, Borrow_book
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug','genre','author', 'condition','pub_date')
+    list_display = ('title', 'slug','genre','author', 'condition','quantity','pub_date')
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('text','pub_date', 'post')

@@ -10,6 +10,7 @@ class Post(models.Model):
     genre = models.CharField(max_length=200, choices=GENRE_CHOICES)
     author = models.CharField(max_length=50)
     condition = models.TextField()
+    quantity = models.IntegerField()
     body = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     class Meta:

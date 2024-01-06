@@ -177,8 +177,8 @@ def borrowBook(request, book_id):
     else:
         user_name="未登入"
     if request.user.is_active:
-        book = Post.objects.get(id=book_id, isOn=True)
-        if book.available_quantity > 0:
+        book = Post.objects.get(id=book_id)
+        if book.quantity > 0:
             due_date = timezone.now() + timezone.timedelta(days=40)
             borrowing_record = Borrow_book.objects.create(
                 readerID=request.user,
@@ -187,13 +187,13 @@ def borrowBook(request, book_id):
                 due_date=due_date,
                 returned=False,
             )
-            book.available_quantity -= 1
+            book.quantity -= 1
             book.save()
             return render(request, 'borrow.html', {'borrowing_record': borrowing_record,'msg':'借閱成功！'})
         else:
             return render(request, 'borrow.html', {'msg': '圖書暫不可借'})
     else:
-        return redirect('login')
+        return render(request, 'login.html', locals())
 
 from django.contrib.auth.decorators import login_required
 

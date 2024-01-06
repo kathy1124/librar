@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}歡迎光臨 圖書館{% endblock title %}
-{% block headmessage %}借閱紀錄{% endblock headmessage %} {% block content %}
+{% block headmessage %} <h3>借閱紀錄</h3> {% endblock headmessage %}
+{% block content %}
 {%if borrowList %}
 <table class="table table-hover">
   <thead>
@@ -12,17 +13,18 @@
     </tr>
   </thead>
   <tbody>
-    {% for borrowing_record in borrowList %}
+    {% for record in borrowList %}
     <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
-      <td>{{ borrowing_record.readerID }}</td>
-      <td>{{ borrowing_record.title }}</td>
-      <td>{% now "Y-m-d" as current_datetime %}</td>
-      <td>{{ borrowing_record.due_date }}</td>
-      <td>{{ borrowing_record.returned }}</td>
+      <td>{{ record.readerID }}</td>
+      <td>{{ record.title }}</td>
+      <td>{{ record.borrow_date }}</td>
+      <td>{{ record.due_date }}</td>
+      <td>{{ record.returned }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 {% else %}
 <p>還沒有借閱紀錄喔~</p>
-{% endif %} {% endblock %}
+{% endif %} 
+{% endblock %}

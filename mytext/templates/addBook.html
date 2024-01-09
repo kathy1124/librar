@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{%block title%}歡迎光臨 圖書館{% endblock title %}
+{% block headmessage %}
+<div style="display: flex;justify-content: space-between; align-items: center;">
+    <h3 style='font-family:微軟正黑體;'>新增書籍</h3>
+    <a style='font-family:微軟正黑體;' href="/">回首頁</a>
+</div>
+{%endblock headmessage%}
+{% block content%}
+<form action="/addBook/" method="post">
+    <h3 style="color: red;">{{ msg }}</h3>
+    {% csrf_token %}
+    <div class="title">
+        <label for="title">書名： </label>
+        <input type="text" name="title" id="">
+    </div>
+    <div class="slug">
+        <label for="slug">slug： </label>
+        <input type="text" name="slug" id="">
+    </div>
+    <div class="genre">
+        <label for="genre">類型： </label>
+        <select id="genre" name="genre">
+            {% for genre in post %}
+                <option value="{{ genre }}">
+                    {{ genre.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+		<div class="author">
+			<label for="author">作者： </label>
+			<input type="text" name="author" id="">
+		</div>
+		<div class="condition">
+			<label for="condition">狀態： </label>
+			<input type="text" name="condition" id="">
+		</div>
+    <div class="quantity">
+        <label for="quantity">數量： </label>
+        <input type="number" name="quantity" id="">
+    </div>
+    <div class="body">
+        <label for="body">介紹： </label>
+        <textarea id="body" name="body" style="height: 300px; width: 700px;"></textarea>
+    </div>
+		<div class="pub_date">
+			<label for="pub_date">上架日期： </label>
+			<input type="date" name="pub_date" id="">
+		</div>
+    <input type="submit" value="新增">
+</form>
+{% endblock content %}

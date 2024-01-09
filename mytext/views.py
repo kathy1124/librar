@@ -4,10 +4,12 @@ from datetime import datetime
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from mytext.forms import UserRegisterForm,LoginForm
+from django.contrib import auth
 from django.contrib import messages
+from django.contrib.auth import authenticate,logout
+from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 
-# Create your views here.
 def homepage(request):
     posts = Post.objects.all()
     now = datetime.now()
@@ -48,7 +50,6 @@ def show_comments(request, post_id):
     comments = Post.objects.get(id=post_id).comment_set.all()
     return render(request, 'comments.html', locals())
 
-from django.contrib.auth.models import User
 #註冊
 def register(request):
     if request.method == 'GET':
@@ -70,8 +71,6 @@ def register(request):
     else:
         message = "ERROR"
         return render(request, 'register.html', locals())
-
-from django.contrib.auth import authenticate,logout
 
 #登入
 def login(request):
@@ -99,7 +98,6 @@ def login(request):
         message = "ERROR"
     return render(request,'login.html',locals())
 
-from django.contrib import auth
 #登出
 def logouts(request):
     logout(request)
@@ -220,3 +218,28 @@ def changePassword(request):
             messages.success(request, '密碼修改成功，請重新登入')
             return redirect('login')
     return render(request, 'changePassword.html')
+
+#新增書籍
+def addBook(request):
+    if request.method=='POST':
+        title=request.POST.get('title')
+        slug=request.POST.get('slug')
+        genre=request.POST.get('genre')
+        author=request.POST.get('author')
+        condition=request.POST.get('condition')
+        quantity=request.POST.get('quantity')
+        body=request.POST.get('body')
+        pub_date=request.POST.get('pub_date')
+        post=Post.objects.create(
+            title=title,
+            slug=slug,
+            genre=genre,
+            author=author,
+            condition=condition,
+            quantity=quantity,
+            body=body,
+            pub_date=pub_date)
+        msg='書籍新增成功'
+        return render(request, 'addBook.html', locals())
+    else:
+        return render(request, 'addBook.html')

@@ -1,12 +1,12 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block title %} 歡迎光臨 圖書館 {% endblock title %}
 {% block headmessage%}
 <h3 style="font-family: 標楷體">
-  Article Comments <a href="{% url 'show_all_post' %}">上一頁</a>
+Article Comments <a href="{% url 'show_all_post' %}">上一頁</a>
 </h3>
-{% endblock headmessage %} 
-{% block content %} 
-{% for c in comments %} 
+{% endblock headmessage %}
+{% block content %}
+{% for c in comments %}
 {% if forloop.first %}
 <table class="table table-hover">
   <thead>
@@ -24,8 +24,8 @@
   </tbody>
 {% if forloop.last %}
 </table>
-{% endif %} 
+{% endif %}
 {% empty %}
 <h2>沒有任何回復</h2>
-{% endfor %} 
+{% endfor %}
 {% endblock content %}

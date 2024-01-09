@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %} 註冊帳號 {% endblock title %}
-{% block headmessage %} <h2>註冊帳號</h2> {% endblock headmessage %} 
+{% block headmessage %}
+<h2>註冊帳號</h2>
+<a style='font-family:微軟正黑體;' href="/">回首頁</a>
+{% endblock headmessage %}
 
 {% block content %}
 
@@ -17,6 +20,6 @@
     <br>
     <input type="submit" class="btn btn-outline-success" value="註冊">
     <input type="reset" class="btn btn-outline-info" value="清除重填">
-</form> 
+</form>
 
 {% endblock content %}

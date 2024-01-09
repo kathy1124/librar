@@ -1,4 +1,4 @@
-from django.db import models 
+from django.db import models
 
 class Post(models.Model):
     GENRE_CHOICES = (
@@ -26,14 +26,16 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return self.text
-    
+
 from django.contrib.auth.models import User
 
-class Borrow_book(models.Model):  
-    readerID = models.ForeignKey(User, on_delete=models.PROTECT)  
-    title = models.ForeignKey(Post, on_delete=models.PROTECT)  
+class Borrow_book(models.Model):
+    readerID = models.ForeignKey(User, on_delete=models.PROTECT)
+    title = models.ForeignKey(Post, on_delete=models.PROTECT)
     borrow_date = models.DateTimeField()  #借書時間
     due_date = models.DateTimeField()     #到期日
     returned = models.BooleanField(default=False)
+    actual_return_date = models.DateField(null=True, blank=True)
+
     class Meta:
         unique_together = ("readerID", "title", "borrow_date")

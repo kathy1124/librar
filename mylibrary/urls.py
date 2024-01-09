@@ -36,8 +36,8 @@ urlpatterns = [
     path('borrowBook/<int:book_id>/borrow',mv.borrow_book, name='borrowBook'),
     path('borrowList/',mv.getBorrowListByUser,name='borrowList'),
 
-    path('return/',mv.returnBook,name='returnBook'),
-    path('returnPage',mv.returnBookPage,name='returnBookPage'),
+    path('returnBook/',mv.returnBook,name='returnBook'),
+    path('returnBookPage',mv.returnBookPage,name='returnBookPage'),
 
     path('addBook/',mv.addBook,name='addBook'),
 ]

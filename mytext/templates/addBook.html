@@ -22,8 +22,8 @@
         <label for="genre">類型： </label>
         <select id="genre" name="genre">
             {% for genre in post %}
-                <option value="{{ genre }}">
-                    {{ genre.name }}
+                <option value="{{ request.genre }}">
+                    {{ genre}}
                 </option>
             {% endfor %}
         </select>
@@ -37,7 +37,7 @@
 			<input type="text" name="condition" id="">
 		</div>
     <div class="quantity">
-        <label for="quantity">數量： </label>
+        <label for="quantity">庫存量： </label>
         <input type="number" name="quantity" id="">
     </div>
     <div class="body">
@@ -47,7 +47,7 @@
 	<div class="pub_date">
 		<label for="pub_date">上架日期： </label>
 		<input type="date" name="pub_date" id="">
-	</div>
+	</div><br>
     <input type="submit" class="btn btn-outline-success" value="新增">
     <input type="reset" class="btn btn-outline-info" value="清除重填">
 </form>

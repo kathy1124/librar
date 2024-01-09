@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{%block title%}歡迎光臨{% endblock title %}
-{% block headmessage %}<h3>圖書歸還系統</h3>{%endblock headmessage%}
+{%block title%}歡迎光臨 圖書館{% endblock title %}
+{% block headmessage %}<h3>歸還書籍</h3>{%endblock headmessage%}
 {% block content%}
 <form action="/returnBookPage/" method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="輸入還書用戶帳號...">
+    <input type="text" name="username" placeholder="請輸入欲還書用戶帳號">
     <button type="submit">搜索</button>
 </form>
     {% if returnList %}
@@ -25,8 +25,8 @@
                     {% else %}
                         <td>{{ l.due_date }}</td>
                     {% endif %}
-                    <form action="/returnBook/" method="post">
-                        {% csrf_token %} 
+                    <form action="/returnBookPage/" method="post">
+                        {% csrf_token %}
                     <td><input type="checkbox" name="return_books" value="{{ l.id }}"></td>
                 </tr>
             {% endfor %}

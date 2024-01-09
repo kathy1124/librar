@@ -4,8 +4,8 @@ from datetime import datetime
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from mytext.forms import UserRegisterForm,LoginForm
-from django.contrib import auth
-from django.contrib import messages
+from django.utils import timezone
+from django.contrib import auth,messages
 from django.contrib.auth import authenticate,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
@@ -171,13 +171,13 @@ def getBorrowListByUser(request):
     return render(request, 'borrowbook.html', locals())
 
 #還書
-def returnBook(request, returnid):
+def returnBook(request, return_id):
     if request.user =='POST':
         returnBook=request.POST.getlist('return_books')
         returnCorrect = []
         u = None
         for record in returnBook:
-            record = borrow_book.objects.get(id=record)
+            record = Borrow_book.objects.get(id=record)
             record.is_returned=True
             record.actual_return_date=timezone.now()
             returnCorrect.append(record)
@@ -194,13 +194,13 @@ def returnBookPage(request):
         name=request.POST.get('username')
         if User.objects.filter(username=name).exists():
             user=User.objects.get(username=request.POST.get('username'))
-            returnList=borrow_book .objects.filter(user=user, is_returned=False).order_by('due_date')
-            return render(request,'returnPage.html',locals())
+            returnList=Borrow_book .objects.filter(user=user, is_returned=False).order_by('due_date')
+            return render(request,'returnBookPage.html',locals())
         else:
-            return render(request,'returnPage.html',{'msg':'查無此用戶'})
+            return render(request,'returnBookPage.html',{'msg':'查無此用戶'})
 
     else:
-        return render(request,'returnPage.html',{'msg':' '})
+        return render(request,'returnBookPage.html',{'msg':' '})
 
 #修改密碼
 def changePassword(request):
@@ -243,3 +243,59 @@ def addBook(request):
         return render(request, 'addBook.html', locals())
     else:
         return render(request, 'addBook.html')
+
+# def bookModify(request, book_id):
+#     if Post.objects.filter(id=book_id).exists():
+#         book=Post.objects.get(id=book_id)
+#         genre=genre.objects.all()
+#         if request.method=='POST':
+#             title=request.POST.get('title')
+#             available_quantity=request.POST.get('available_quantity')
+#             content=request.POST.get('content')
+#             categoryId=request.POST.get('category')
+#             genre=genre.objects.get(id=categoryId)
+
+#             post.title=title
+#             post.available_quantity=available_quantity
+#             post.content=content
+#             post.category=category
+
+#             post.save()
+#             msg='修改成功'
+#             return render(request, 'bookModify.html', locals())
+#         else:
+#             return render(request, 'bookModify.html', locals())
+#     else:
+#         return redirect('/')
+
+def returnBookPage(request):
+    if request.method=='POST':
+        name=request.POST.get('username')
+        if User.objects.filter(username=name).exists():
+            user=User.objects.get(username=request.POST.get('username'))
+            returnList=borrow_book.objects.filter(user=user, is_returned=False).order_by('due_date')
+            return render(request,'returnBookPage.html',locals())
+        else:
+            return render(request,'returnBookPage.html',{'msg':'查無此用戶'})
+
+    else:
+        return render(request,'returnBookPage.html',{'msg':' '})
+
+def returnBook(request):
+    if request.method=='POST':
+        u=None
+        returnCorrect=[]
+        returnBookList=request.POST.getlist('return_books')
+        for recordingId in returnBookList:
+            recording=borrow_book.objects.get(id=recordingId)
+            recording.returned=True
+            recording.actual_return_date=timezone.now()
+            returnCorrect.append(recording)
+            recording.save()
+
+            recording.book.quantity += 1
+            recording.book.save()
+            u=recording.user
+        return render(request, 'returnBook.html',{'returnCorrect':returnCorrect,'u':u})
+    else:
+        return redirect('/returnBookPage/')

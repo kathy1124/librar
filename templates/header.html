@@ -1,9 +1,9 @@
 <!-- header.html -->
 {% load static %}
-<div class="container-fluid">
+<div class="container-fluid" style="line-height:35px">
   <div class="row">
     <div class="col-sm-3 col-md-3">
-      <h1 style="font-family: Arial, Helvetica, sans-serif">
+      <h1 style="font-family: Arial, Helvetica, sans-serif;line-height:70px">
         Welcome to our library
       </h1>
     </div>
@@ -22,18 +22,6 @@
           showMovingText();
         </script>
       </div>
-    </div>
-    <div class="col-sm-1 col-md-1">
-      <p></p>
-      <a href="{% url 'login' %}" class="list-group-item">Login</a>
-    </div>
-    <div class="col-sm-1 col-md-1">
-      <p></p>
-      <a href="{% url 'register' %}" class="list-group-item">Register</a>
-    </div>
-    <div class="col-sm-1 col-md-1">
-      <p></p>
-      <a href="{% url 'logout' %}" class="list-group-item">Logout</a>
     </div>
   </div>
 </div>

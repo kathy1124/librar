@@ -73,59 +73,31 @@ from django.contrib.auth import authenticate,logout
 
 #登入
 def login(request):
+    if request.method == 'GET':
+        form = LoginForm()
+        return render(request, 'login.html', locals())
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user_name = form.cleaned_data['user_name']
+            user_password = form.cleaned_data['user_password']
+            user = authenticate(username=user_name, password=user_password)
+            if user is not None:
+                if user.is_active:
+                    auth.login(request, user)
+                    print("success")
+                    message = '成功登入了'
+                    return redirect('/')
+                else:
+                    message = '帳號尚未啟用'
+            else:
+                message = '登入失敗'
+        return render(request, 'login.html', locals())
+    else:
+        message = "ERROR"
     return render(request,'login.html',locals())
 
 from django.contrib import auth
-#使用者登入
-def userLogin(request):
-    if request.method == 'GET':
-        form = LoginForm()
-        return render(request, 'userLogin.html', locals())
-    elif request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user_name = form.cleaned_data['user_name']
-            user_password = form.cleaned_data['user_password']
-            user = authenticate(username=user_name, password=user_password)
-            if user is not None:
-                if user.is_active:
-                    auth.login(request, user)
-                    print("success")
-                    message = '成功登入了'
-                    return redirect('/')
-                else:
-                    message = '帳號尚未啟用'
-            else:
-                message = '登入失敗'
-        return render(request, 'userLogin.html', locals())
-    else:
-        message = "ERROR"
-        return render(request, 'userLogin.html', locals())
-#圖書管理員登入
-def managerLogin(request):
-    if request.method == 'GET':
-        form = LoginForm()
-        return render(request, 'managerLogin.html', locals())
-    elif request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user_name = form.cleaned_data['user_name']
-            user_password = form.cleaned_data['user_password']
-            user = authenticate(username=user_name, password=user_password)
-            if user is not None:
-                if user.is_active:
-                    auth.login(request, user)
-                    print("success")
-                    message = '成功登入了'
-                    return redirect('/')
-                else:
-                    message = '帳號尚未啟用'
-            else:
-                message = '登入失敗'
-        return render(request, 'managerLogin.html', locals())
-    else:
-        message = "ERROR"
-        return render(request, 'managerLogin.html', locals())
 #登出
 def logouts(request):
     logout(request)
@@ -160,10 +132,6 @@ def index(request):
 def condition(request, id):
     if request.use.is_active:
         c = Post.objects.get(id=id)
-
-
-
-
 
 from django.utils import timezone
 # 借書
@@ -201,3 +169,52 @@ def getBorrowListByUser(request):
     borrowList = Borrow_book.objects.filter(readerID=current_user).order_by('-borrow_date', '-returned')
     identityName = identity(current_user)
     return render(request, 'borrowbook.html', locals())
+
+#還書
+def returnBook(request, returnid):
+    if request.user =='POST':
+        returnBook=request.POST.getlist('return_books')
+        returnCorrect = []
+        u = None
+        for record in returnBook:
+            record = borrow_book.objects.get(id=record)
+            record.is_returned=True
+            record.actual_return_date=timezone.now()
+            returnCorrect.append(record)
+            record.save()
+            record.book.available_quantity += 1
+            record.book.save()
+            u=record.user
+        return render(request, 'returnBook.html',{'returnCorrect':returnCorrect,'u':u})
+    else:
+        return redirect('/')   
+    
+def returnBookPage(request):
+    if request.method=='POST':
+        name=request.POST.get('username')
+        if User.objects.filter(username=name).exists():
+            user=User.objects.get(username=request.POST.get('username'))
+            returnList=borrow_book .objects.filter(user=user, is_returned=False).order_by('due_date')
+            return render(request,'returnPage.html',locals())
+        else:
+            return render(request,'returnPage.html',{'msg':'查無此用戶'})
+
+    else:
+        return render(request,'returnPage.html',{'msg':' '})
+    
+#修改密碼
+def changePassword(request):
+    if request.method=='POST':
+        password=request.POST.get('password')
+        newPassword1=request.POST.get('newPassword1')
+        newPassword2=request.POST.get('newPassword2')
+        if not check_password(password, request.user.password):
+            return render(request, 'changePassword.html', {'msg':'密碼錯誤'})
+        elif newPassword1 != newPassword2:
+            return render(request, 'changePassword.html', {'msg':'兩次密碼輸入不同'})
+        else:
+            request.user.set_password(newPassword1)
+            request.user.save()
+            messages.success(request, '密碼修改成功，請重新登入')
+            return redirect('login')
+    return render(request, 'changePassword.html')

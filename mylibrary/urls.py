@@ -22,17 +22,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',mv.homepage, name='homepage'),
     path('post/<slug:slug>/', mv.showpost, name="showpost"),
-    path('login/', mv.login),
     path('post', mv.show_all_post, name="show_all_post"),
     path('post/<int:post_id>/comments', mv.show_comments, name='show-comments'),
+    
     path('register/', mv.register, name= 'register'),
     path('login/',mv.login, name='login'),
-    path('userLogin/',mv.userLogin, name='userLogin'),
-    path('managerLogin/',mv.managerLogin, name='managerLogin'),
+    path('changePassword/',mv.changePassword,name='changePassword'),
     path('logout/',mv.logouts, name='logout'),
+
     path('search/',mv.index, name='search'),
+    
     path('condition/',mv.condition,name='condition'),
     path('borrowBook/<int:book_id>/borrow',mv.borrow_book, name='borrowBook'),
     path('borrowList/',mv.getBorrowListByUser,name='borrowList'),
-    
+
+    path('return/',mv.returnBook,name='returnBook'),
+    path('returnPage',mv.returnBookPage,name='returnBookPage'),
 ]

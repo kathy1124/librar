@@ -4,6 +4,8 @@ from datetime import datetime
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from mytext.forms import UserRegisterForm,LoginForm
+from django.contrib import messages
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 def homepage(request):
@@ -187,8 +189,8 @@ def returnBook(request, returnid):
             u=record.user
         return render(request, 'returnBook.html',{'returnCorrect':returnCorrect,'u':u})
     else:
-        return redirect('/')   
-    
+        return redirect('/')
+
 def returnBookPage(request):
     if request.method=='POST':
         name=request.POST.get('username')
@@ -201,7 +203,7 @@ def returnBookPage(request):
 
     else:
         return render(request,'returnPage.html',{'msg':' '})
-    
+
 #修改密碼
 def changePassword(request):
     if request.method=='POST':
@@ -209,9 +211,9 @@ def changePassword(request):
         newPassword1=request.POST.get('newPassword1')
         newPassword2=request.POST.get('newPassword2')
         if not check_password(password, request.user.password):
-            return render(request, 'changePassword.html', {'msg':'密碼錯誤'})
+            return render(request, 'changePassword.html', {'msg':'原密碼輸入錯誤'})
         elif newPassword1 != newPassword2:
-            return render(request, 'changePassword.html', {'msg':'兩次密碼輸入不同'})
+            return render(request, 'changePassword.html', {'msg':'兩次密碼不一致！'})
         else:
             request.user.set_password(newPassword1)
             request.user.save()

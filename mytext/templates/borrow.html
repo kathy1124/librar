@@ -3,32 +3,4 @@
 {% block headmessage %} <h3>借書</h3> {% endblock headmessage %}
 {% block content %}
 <div class='alert alert-warning'>{{ message }}</div>
-{% for b in books %}
-    {% if msg == "借閱成功！" %}
-    <table class="table table-hover">
-        <thead>
-            <tr style="background:#cccccc">
-                <th>讀者姓名</th>
-                <th>借閱書籍</th>
-                <th>借閱日期</th>
-                <th>到期日期</th>
-            </tr>
-        </thead>
-        <tbody>
-            "background-color: {% cycle "#ffccff" "#ccffcc" %};">
-                <td>{{ b.readerID }}</td>
-                <td>{{ b.title }}</td>
-                <td>{{ b.borrow_date }}</td>
-                <td>{{ b.due_date }}</td>
-            </tr>
-        </tbody>
-    </table>
-    {% else %}
-        <a>再借幾本書吧~</a>
-    {% endif %}
-
-    {% if forloop.last %}
-    </table>
-{% endif %}
-{% endfor %}
 {% endblock content %}

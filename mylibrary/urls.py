@@ -27,9 +27,11 @@ urlpatterns = [
     path('post/<int:post_id>/comments', mv.show_comments, name='show-comments'),
     path('register/', mv.register, name= 'register'),
     path('login/',mv.login, name='login'),
+    path('userLogin/',mv.userLogin, name='userLogin'),
+    path('managerLogin/',mv.managerLogin, name='managerLogin'),
     path('logout/',mv.logouts, name='logout'),
     path('search/',mv.index, name='search'),
-    path('condition/',mv.books_condition,name='condition'),
+    path('condition/',mv.condition,name='condition'),
     path('borrowBook/<int:book_id>/borrow',mv.borrow_book, name='borrowBook'),
     path('borrowList/',mv.getBorrowListByUser,name='borrowList'),
     

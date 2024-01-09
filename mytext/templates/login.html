@@ -1,21 +1,12 @@
 {% extends "base.html" %}
-{% block title %} 登入帳號 {% endblock title %}
-{% block headmessage %} <h2>登入帳號</h2> {% endblock headmessage %} 
+{% block title %} 登入 {% endblock title %}
+{% block headmessage %} <h2>登入</h2> {% endblock headmessage %} 
 
 {% block content %}
-{% if message %}
-    <div class='alert alert-warning'>
-        {{ message }}
-    </div>
-{% endif %}
-<form action="" method="post">
-    {% csrf_token %}
-    <table >
-    {{ form.as_table }}
-    </table>
-    <br>
-    <input type="submit" class="btn btn-outline-success" value="登入">
-    <input type="reset" class="btn btn-outline-info" value="清除重填">
-</form> 
+<h4>請選擇您的身分</h4>
+
+<button type="button" class="btn btn-outline-primary"><a href="{% url 'managerLogin' %}">圖書管理員</a></button>
+<button type="button" class="btn btn-outline-primary"><a href="{% url 'userLogin' %}">使用者</a></button>
+
 
 {% endblock content %}

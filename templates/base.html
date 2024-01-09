@@ -19,16 +19,16 @@
     <style>
       .a:link {
         color: #0da6da;
-        text-decoration: underline;
+        text-decoration:none;
       }
       a:visited {
         color: #0e1a23;
       }
       a:hover {
-        color: #d4a3c4;
-        text-decoration: underline;
+        color: #241e22;
+        text-decoration:none;
         text-decoration-style: dotted;
-        text-decoration-color: #545b55;
+        text-decoration-color: #ffffff;
       }
       a:active {
         color: rgb(155, 196, 196);
@@ -177,7 +177,7 @@
               <div class="list-group">
                 <a href="/" class="list-group-item">HOME</a>  
                 <a href="{% url 'search' %}" class="list-group-item">搜尋書籍</a>
-                <a href="{% url 'show_all_post' %}" class="list-group-item">評論</a>
+                <a href="{% url 'show_all_post' %}" class="list-group-item">讀者評論</a>
                 <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
                 <br/>
               </div>

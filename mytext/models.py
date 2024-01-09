@@ -2,8 +2,8 @@ from django.db import models
 
 class Post(models.Model):
     GENRE_CHOICES = (
-        ('fairy tale', '童話'),
-        ('comic', '漫畫'),
+        ('童話', '童話'),
+        ('漫畫', '漫畫'),
     )
     title = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)

@@ -70,12 +70,17 @@ def register(request):
         return render(request, 'register.html', locals())
 
 from django.contrib.auth import authenticate,logout
-from django.contrib import auth
+
 #登入
 def login(request):
+    return render(request,'login.html',locals())
+
+from django.contrib import auth
+#使用者登入
+def userLogin(request):
     if request.method == 'GET':
         form = LoginForm()
-        return render(request, 'login.html', locals())
+        return render(request, 'userLogin.html', locals())
     elif request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -92,11 +97,35 @@ def login(request):
                     message = '帳號尚未啟用'
             else:
                 message = '登入失敗'
-        return render(request, 'login.html', locals())
+        return render(request, 'userLogin.html', locals())
     else:
         message = "ERROR"
-        return render(request, 'login.html', locals())
-
+        return render(request, 'userLogin.html', locals())
+#圖書管理員登入
+def managerLogin(request):
+    if request.method == 'GET':
+        form = LoginForm()
+        return render(request, 'managerLogin.html', locals())
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user_name = form.cleaned_data['user_name']
+            user_password = form.cleaned_data['user_password']
+            user = authenticate(username=user_name, password=user_password)
+            if user is not None:
+                if user.is_active:
+                    auth.login(request, user)
+                    print("success")
+                    message = '成功登入了'
+                    return redirect('/')
+                else:
+                    message = '帳號尚未啟用'
+            else:
+                message = '登入失敗'
+        return render(request, 'managerLogin.html', locals())
+    else:
+        message = "ERROR"
+        return render(request, 'managerLogin.html', locals())
 #登出
 def logouts(request):
     logout(request)
@@ -105,7 +134,9 @@ def logouts(request):
 
 def identity(user):
     if user.is_superuser:
-        return "管理員"
+        return "系統管理者"
+    elif user.is_staff:
+        return "圖書管理員"
     else:
         return "使用者"
 
@@ -126,71 +157,37 @@ def index(request):
     return render(request, 'search.html', locals())
 
 #Books 狀態
-def books_condition(request):
-    if request.user.is_authenticated:
-        user_name = request.user.username
-    else:
-        user_name="未登入"
-    context = dict()
-    context['readerID'] = request.session.get('readerID', None)
-    result = User.objects.filter(username=request.session.get('readerID'))
-    condition = []
-    for b in result:
-        condition.append(
-            {
-                'title': b.title.title if hasattr(b, 'title') and hasattr(b.title, 'title') else None,
-                'borrow_date': b.borrow_date,
-                'due_date': b.due_date,
-                'return_date': b.return_date
-            }
-        )
-    context['condition'] = condition
-    return render(request, 'condition.html', locals())
+def condition(request, id):
+    if request.use.is_active:
+        c = Post.objects.get(id=id)
+
+
+
+
 
 from django.utils import timezone
 # 借書
 def borrow_book(request,book_id):
     if request.user.is_active:
         book = Post.objects.get(id=book_id)
-        if book.quantity >0:
+        quantity = int(book.quantity)
+        if quantity > 0:
             due_date = timezone.now() + timezone.timedelta(days=40)
             borrow_books = Borrow_book.objects.create(
                 readerID = request.user,
                 title = book,
                 borrow_date = timezone.now(),
                 due_date = due_date,
-                returned = False
+                returned = False,
             )
-            book.quantity -= -1
-            message = "借閱成功"
+            book.quantity -= 1
             book.save()
-            return render(request, 'borrow.html', locals())
+            return render(request, 'borrow.html', {'borrow_book':borrow_books,'message': "借閱成功"})
         else:
-            message = "圖書暫不可借"
+            message = "此書暫不可借"
             return render(request, 'borrow.html',locals())
     else:
         return render(request, 'login.html', locals())
-
-
-# def borrowBook(request, book_id):
-#     if request.user.is_active:
-#         book = Post.objects.get(id=book_id)
-#         if book.quantity > 0:
-#             due_date = timezone.now() + timezone.timedelta(days=40)
-#             borrowing_record = Borrow_book.objects.create(
-#                 readerID=request.user,
-#                 title=book,
-#                 borrow_date=timezone.now(),
-#                 due_date=due_date,
-#                 returned=False,
-#             )
-#             book.quantity -= 1
-#             book.save()
-#             return render(request, 'borrow.html', {'borrowing_record': borrowing_record,'msg':'借閱成功！'})
-#         else:
-#             return render(request, 'borrow.html', {'msg': '圖書暫不可借'})
-#     else:
-#         return render(request, 'login.html', locals())
 
 from django.contrib.auth.decorators import login_required
 

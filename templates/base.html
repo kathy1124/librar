@@ -157,7 +157,7 @@
                   {% else %}
                       <h3>帳號名稱:{{ user_name }}</h3>
                   {% endif %}
-                  <a href="{% url 'changePassword' %}">修改密碼</a>
+                  <a href="{% url 'changePassword' %}">變更密碼</a>
                   <a href="{% url 'logout' %}">登出</a>
               {% else %}
                   <h3>目前尚未登入</h3>
@@ -179,8 +179,10 @@
                 <a href="{% url 'search' %}" class="list-group-item">搜尋書籍</a>
                 <a href="{% url 'show_all_post' %}" class="list-group-item">讀者評論</a>
                 <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
-                <a href="{% url 'returnBookPage' %}" class="list-group-item">還書</a>
-                <br/>
+                {% if request.user.is_staff %}
+                  <a href="{% url 'returnBookPage' %}" class="list-group-item">還書</a>
+                {% endif %}
+                  <br/>
               </div>
             </div>
           </div>
@@ -200,6 +202,7 @@
                 <a class="a2a_button_line"></a>
                 <a class="a2a_button_email"></a><br>
               </div>
+              </p>
             </div>
           </div>
           <p>

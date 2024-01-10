@@ -180,6 +180,7 @@
                 <a href="{% url 'show_all_post' %}" class="list-group-item">讀者評論</a>
                 {% if request.user.is_active %}
                   <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
+                  <a href="{% url 'addComents'%}" class="list-group-item">新增評論</a>
                   {% if request.user.is_staff %}
                     <a href="{% url 'addBook' %}" class="list-group-item">新增書籍</a>
                     <a href="{% url 'returnBookPage' %}" class="list-group-item">歸還書籍</a>

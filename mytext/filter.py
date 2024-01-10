@@ -7,6 +7,7 @@ class BookFilter(django_filters.FilterSet):
         lookup_expr='icontains',
         widget=forms.TextInput(attrs={'class': 'form-control'}))
     genre = django_filters.CharFilter(
+        lookup_expr='icontains',
         widget=forms.TextInput(attrs={'class': 'form-control'}))
     author = django_filters.CharFilter(
         lookup_expr='icontains',

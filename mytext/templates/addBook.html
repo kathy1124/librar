@@ -19,7 +19,11 @@
     </div>
     <div class="genre">
         <label for="genre">類型： </label>
-        <input id="text" name="genre" id="">
+        <select>
+            {% for choices in GENRE_CHOICES %}
+            <option value="{{choices}}">{{choices}}</option>
+            {% endfor %}
+        </select>
     </div>
 		<div class="author">
 			<label for="author">作者： </label>

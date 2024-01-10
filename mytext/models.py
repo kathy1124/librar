@@ -1,17 +1,14 @@
 from django.db import models
 
 class Post(models.Model):
-    GENRE_CHOICES = (
-        ('童話', '童話'),
-        ('漫畫', '漫畫'),
-    )
     title = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)
-    genre = models.CharField(max_length=200, choices=GENRE_CHOICES)
+    genre = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
     quantity = models.IntegerField()
     body = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
+    picture = models.CharField(max_length=500)
     class Meta:
         ordering = ('-pub_date',)
 

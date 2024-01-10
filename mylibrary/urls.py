@@ -21,9 +21,10 @@ from mytext import views as mv
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',mv.homepage, name='homepage'),
-    path('post/<slug:slug>/', mv.showpost, name="showpost"),
+    path('post/<slug:slug>/', mv.postPage, name="postPage"),
     path('post', mv.show_all_post, name="show_all_post"),
     path('post/<int:post_id>/comments', mv.show_comments, name='show-comments'),
+    path('postPage', mv.postPage, name="postPage"),
 
     path('register/', mv.register, name= 'register'),
     path('login/',mv.login, name='login'),

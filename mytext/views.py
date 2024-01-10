@@ -228,6 +228,7 @@ def changePassword(request):
 
 #新增書籍
 def addBook(request):
+    GENRE_CHOICES = ('請選擇','童話','漫畫')
     if request.method=='POST':
         title=request.POST.get('title')
         slug=request.POST.get('slug')
@@ -246,7 +247,7 @@ def addBook(request):
         text='書籍新增'
         return render(request, 'borrow.html', locals())
     else:
-        return render(request, 'addBook.html')
+        return render(request, 'addBook.html', locals())
 
 def bookManagePage(request):
     if request.user.is_staff:
@@ -313,3 +314,11 @@ def returnBook(request):
         return render(request, 'returnBook.html',{'returnCorrect':returnCorrect,'u':u})
     else:
         return redirect('/returnBookPage/')
+
+def postPage(request, slug):
+    post=Post.objects.filter(slug=slug)
+    if post:
+        post=post.first()
+        return render(request, 'postPage.html', locals())
+    else:
+        return redirect('/')

@@ -135,14 +135,17 @@ def condition(request, id):
 
 from django.utils import timezone
 # 借書
-def borrow_book(request,book_id):
+def borrow_book(request,post_id):
     if request.user.is_active:
-        book = Post.objects.get(id=book_id)
+
+        book = Post.objects.get(id=post_id)
         if Borrow_book.objects.filter(readerID=request.user, returned=False, title=book) :
             message = "此書以借閱，請歸還後再借閱!"
+            text='重複借閱'
             return render(request, 'borrow.html',locals())
         elif book.quantity==0:
             message = "此書暫不可借，請先借閱別本書!"
+            text='館藏已無'
             return render(request, 'borrow.html',locals())
         else:   
             quantity = int(book.quantity)
@@ -157,7 +160,7 @@ def borrow_book(request,book_id):
                 )
                 book.quantity -= 1
                 book.save()
-                return render(request, 'borrow.html', {'borrow_book':borrow_books,'message': "借閱成功"})
+                return render(request, 'borrow.html', {'borrow_book':borrow_books,'message':"借閱成功", 'text':"借書"})
     else:
         return render(request, 'login.html', locals())
 
@@ -240,33 +243,44 @@ def addBook(request):
             quantity=quantity,
             body=body)
         message='書籍新增成功'
-        return render(request, 'addBook.html', locals())
+        text='書籍新增'
+        return render(request, 'borrow.html', locals())
     else:
         return render(request, 'addBook.html')
 
-# def bookModify(request, book_id):
-#     if Post.objects.filter(id=book_id).exists():
-#         book=Post.objects.get(id=book_id)
-#         genre=genre.objects.all()
-#         if request.method=='POST':
-#             title=request.POST.get('title')
-#             available_quantity=request.POST.get('available_quantity')
-#             content=request.POST.get('content')
-#             categoryId=request.POST.get('category')
-#             genre=genre.objects.get(id=categoryId)
+def bookManagePage(request):
+    if request.user.is_staff:
+        PostList=Post.objects.all()
+        return render(request, 'bookManagePage.html',locals())
+    else:
+        return redirect('/')
 
-#             post.title=title
-#             post.available_quantity=available_quantity
-#             post.content=content
-#             post.category=category
+def bookModify(request, post_id):
+    if Post.objects.filter(id=post_id).exists():
+        post=Post.objects.get(id=post_id)
+        if request.method=='POST':
+            title=request.POST.get('title')
+            slug=request.POST.get('slug')
+            genre=request.POST.get('genre')
+            author=request.POST.get('author')
+            quantity=request.POST.get('quantity')
+            body=request.POST.get('body')
 
-#             post.save()
-#             msg='修改成功'
-#             return render(request, 'bookModify.html', locals())
-#         else:
-#             return render(request, 'bookModify.html', locals())
-#     else:
-#         return redirect('/')
+            post.title=title
+            post.slug=slug
+            post.genre=genre
+            post.author=author
+            post.quantity=quantity
+            post.body=body
+
+            post.save()
+            message='書籍修改成功'
+            text='書籍修改'
+            return render(request, 'borrow.html', locals())
+        else:
+            return render(request, 'bookModify.html',locals())
+    else:
+        return redirect('/')
 
 def returnBookPage(request):
     if request.method=='POST':

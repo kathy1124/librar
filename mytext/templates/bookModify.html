@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{%block title%} 歡迎光臨 圖書館 {% endblock title %}
+{% block headmessage %}
+<div style="display: flex;justify-content: space-between; align-items: center;">
+    <h3 style='font-family:微軟正黑體;'>{{ post.title }} 書籍資料修改</h3>
+    <a style='font-family:微軟正黑體;' href="/bookManagePage/">回管理頁</a>
+</div>
+{%endblock headmessage%}
+{% block content%}
+<form action="/bookModify/{{ post.id }}" method="post">
+    {% csrf_token %}
+    <div class="title">
+        <label for="title">書名： </label>
+        <input type="text" name="title" id="" value="{{ post.title }}">
+    </div>
+    <div class="slug">
+        <label for="slug">slug： </label>
+        <input type="text" name="slug" id="" value="{{ post.slug }}">
+    </div>
+    <div class="genre">
+        <label for="genre">類型： </label>
+        <input id="text" name="genre" id="" value="{{ post.genre }}">
+    </div>
+		<div class="author">
+			<label for="author">作者： </label>
+			<input type="text" name="author" id="" value="{{ post.author }}">
+		</div>
+    <div class="quantity">
+        <label for="quantity">庫存量： </label>
+        <input type="number" name="quantity" id="" value="{{ post.quantity }}">
+    </div>
+    <div class="body">
+        <label for="body">介紹： </label>
+        <textarea id="body" name="body" style="height: 300px; width: 700px;">{{ post.body }}</textarea>
+    </div><br>
+    <input type="submit" class="btn btn-outline-success" value="修改">
+    <input type="reset" class="btn btn-outline-info" value="清除重填">
+</form>
+{% endblock content %}

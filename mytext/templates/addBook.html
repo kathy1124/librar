@@ -8,7 +8,6 @@
 {%endblock headmessage%}
 {% block content%}
 <form action="/addBook/" method="post">
-    <h3 style="color: red;">{{ msg }}</h3>
     {% csrf_token %}
     <div class="title">
         <label for="title">書名： </label>

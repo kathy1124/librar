@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %} 歡迎光臨 圖書館 {% endblock title %}
-{% block headmessage %} <h3>借書</h3> {% endblock headmessage %}
+{% block headmessage %}
+<h3>{{ text }}</h3> 
+ {% endblock headmessage %}
 {% block content %}
 <div class='alert alert-warning'>{{ message }}</div>
 {% endblock content %}

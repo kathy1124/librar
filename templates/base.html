@@ -182,6 +182,7 @@
                 {% if request.user.is_staff %}
                   <a href="{% url 'addBook' %}" class="list-group-item">新增書籍</a>
                   <a href="{% url 'returnBookPage' %}" class="list-group-item">歸還書籍</a>
+                  <a href="{% url 'bookManagePage' %}" class="list-group-item">修改書籍</a>
                 {% endif %}
                   <br/>
               </div>

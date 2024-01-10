@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{%block title%} 歡迎光臨 圖書館 {% endblock title %}
+{% block headmessage %}
+<div style="display: flex;justify-content: space-between; align-items: center;">
+    <h3 style='font-family:微軟正黑體;'>書籍管理</h3>
+    <a style='font-family:微軟正黑體;' href="/">回首頁</a>
+</div>
+{%endblock headmessage%}
+{% block content%}
+{% if PostList %}
+<table>
+<tr>
+    <td>書名</td>
+    <td>作者</td>
+    <td>分類</td>
+    <td>館內餘量</td>
+</tr>
+       {% for post in PostList %}
+       <tr>
+            <td>{{ post.title }}</td>
+            <td>{{ post.author }}</td>
+            <td>{{ post.genre }}</td>
+            <td>{{ post.quantity }}</td>
+            <td><a href="/bookModify/{{ post.id }}">修改</a></td>
+        </tr> 
+        {% endfor %} 
+    
+    
+</table>
+    
+{% else %}
+    <p>尚未有書籍</p>
+{% endif %}
+{% endblock content %}

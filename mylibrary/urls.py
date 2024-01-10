@@ -33,11 +33,13 @@ urlpatterns = [
     path('search/',mv.index, name='search'),
 
     path('condition/',mv.condition,name='condition'),
-    path('borrowBook/<int:book_id>/borrow',mv.borrow_book, name='borrowBook'),
+    path('borrowBook/<int:post_id>/borrow',mv.borrow_book, name='borrowBook'),
     path('borrowList/',mv.getBorrowListByUser,name='borrowList'),
 
     path('returnBook/',mv.returnBook,name='returnBook'),
     path('returnBookPage',mv.returnBookPage,name='returnBookPage'),
 
     path('addBook/',mv.addBook,name='addBook'),
+    path('bookManagePage/',mv.bookManagePage,name='bookManagePage'),
+    path('bookModify/<int:post_id>',mv.bookModify,name='bookModify'),
 ]

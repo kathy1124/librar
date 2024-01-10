@@ -46,7 +46,6 @@ def show_comments(request, post_id):
         user_name = request.user.username
     else:
         user_name="未登入"
-    #comments = Comment.objects.filter(post=post_id)
     comments = Post.objects.get(id=post_id).comment_set.all()
     return render(request, 'comments.html', locals())
 
@@ -84,13 +83,8 @@ def login(request):
             user_password = form.cleaned_data['user_password']
             user = authenticate(username=user_name, password=user_password)
             if user is not None:
-                if user.is_active:
-                    auth.login(request, user)
-                    print("success")
-                    message = '成功登入了'
-                    return redirect('/')
-                else:
-                    message = '帳號尚未啟用'
+                auth.login(request, user)
+                return redirect('/')
             else:
                 message = '登入失敗'
         return render(request, 'login.html', locals())
@@ -115,10 +109,6 @@ def identity(user):
 #搜尋
 from mytext.filter import BookFilter
 def index(request):
-    if request.user.is_authenticated:
-        user_name = request.user.username
-    else:
-        user_name="未登入"
     books = Post.objects.all()
     bookFilter = BookFilter(queryset=books)
     if request.method == "POST":
@@ -145,7 +135,7 @@ def borrow_book(request,post_id):
             return render(request, 'borrow.html',locals())
         elif book.quantity==0:
             message = "此書暫不可借，請先借閱別本書!"
-            text='館藏已無'
+            text='館藏無此書'
             return render(request, 'borrow.html',locals())
         else:   
             quantity = int(book.quantity)
@@ -187,9 +177,8 @@ def returnBook(request):
             recording.save()
             recording.title.quantity += 1
             recording.title.save()
-        return render(request, 'returnBookPage.html',locals())
-    else:
-        return redirect('/returnBookPage/')
+        return render(request, 'returnBook.html',{'message':"書籍歸還成功", 'text':"書籍歸還"})
+
 
 def returnBookPage(request):
     if request.method == 'POST':
@@ -197,11 +186,11 @@ def returnBookPage(request):
         try:
             user = User.objects.get(username=name)
         except User.DoesNotExist:
-            return render(request, 'returnBookPage.html', {'msg': '查無此用戶'})
+            return render(request, 'borrow.html', {'message': '查無此用戶'})
         returnList = Borrow_book.objects.filter(readerID=user, returned=False).order_by('due_date')
         return render(request, 'returnBookPage.html', {'user': user, 'returnList': returnList})
     else:
-        return render(request, 'returnBookPage.html', {'msg': ' '})
+        return render(request, 'returnBookPage.html')
 
 #修改密碼
 def changePassword(request):
@@ -230,13 +219,15 @@ def addBook(request):
         author=request.POST.get('author')
         quantity=request.POST.get('quantity')
         body=request.POST.get('body')
+        picture=request.POST.get('picture')
         Post.objects.create(
             title=title,
             slug=slug,
             genre=genre,
             author=author,
             quantity=quantity,
-            body=body)
+            body=body,
+            picture=picture)
         message='書籍新增成功'
         text='書籍新增'
         return render(request, 'borrow.html', locals())
@@ -260,13 +251,15 @@ def bookModify(request, post_id):
             author=request.POST.get('author')
             quantity=request.POST.get('quantity')
             body=request.POST.get('body')
-
+            picture=request.POST.get('picture')
+            
             post.title=title
             post.slug=slug
             post.genre=genre
             post.author=author
             post.quantity=quantity
             post.body=body
+            picture=picture
 
             post.save()
             message='書籍修改成功'

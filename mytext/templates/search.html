@@ -23,7 +23,7 @@
     {% for book in bookFilter.qs %}
     <tr>
       <td>{{ book.title }}</td>
-      <td>{{ book.get_genre_display }}</td>
+      <td>{{ book.genre }}</td>
       <td>{{ book.author }}</td>
     </tr>
     {% endfor %}

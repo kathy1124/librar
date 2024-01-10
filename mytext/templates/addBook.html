@@ -17,9 +17,13 @@
         <label for="slug">slug： </label>
         <input type="text" name="slug" id="">
     </div>
+    <div class="picture">
+        <label for="picture">書籍封面： </label>
+        <input type="text" name="picture" id="">
+    </div>
     <div class="genre">
         <label for="genre">類型： </label>
-        <select>
+        <select name='genre'>
             {% for choices in GENRE_CHOICES %}
             <option value="{{choices}}">{{choices}}</option>
             {% endfor %}

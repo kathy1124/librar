@@ -120,6 +120,18 @@
               width: 100%;
           }
       }
+      .list-group-item {
+        color: #007bff;
+        text-decoration: none;
+      }
+      .list-group-item:hover {
+          color: #0056b3;
+          background-color: #f8f9fa;
+      }
+      .list-group-item:active {
+        color: #003366;
+        background-color: #e2e6ea;
+    }
     </style>
   </head>
   <body style="background-color: rgb(207, 233, 243)">
@@ -179,8 +191,8 @@
                 <a href="{% url 'search' %}" class="list-group-item">搜尋書籍</a>
                 <a href="{% url 'show_all_post' %}" class="list-group-item">讀者評論</a>
                 {% if request.user.is_active %}
-                  <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
-                  <a href="{% url 'addComents'%}" class="list-group-item">新增評論</a>
+                <a href="{% url 'addComents'%}" class="list-group-item">新增評論</a>
+                <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
                   {% if request.user.is_staff %}
                     <a href="{% url 'addBook' %}" class="list-group-item">新增書籍</a>
                     <a href="{% url 'returnBookPage' %}" class="list-group-item">歸還書籍</a>

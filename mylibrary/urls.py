@@ -39,7 +39,7 @@ urlpatterns = [
     path('borrowList/',mv.getBorrowListByUser,name='borrowList'),
 
     path('returnBook/',mv.returnBook,name='returnBook'),
-    path('returnBookPage',mv.returnBookPage,name='returnBookPage'),
+    path('returnBookPage/',mv.returnBookPage,name='returnBookPage'),
 
     path('addBook/',mv.addBook,name='addBook'),
     path('bookManagePage/',mv.bookManagePage,name='bookManagePage'),

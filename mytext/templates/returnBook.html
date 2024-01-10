@@ -2,12 +2,11 @@
 {% block title %}歡迎光臨 圖書館{% endblock title %}
 {% block headmessage %}
 <h3 style='font-family:微軟正黑體;'>{{ u.username }} 還書成功</h3>
+<a style='font-family:微軟正黑體;' href="/">回首頁</a>
 {% endblock headmessage %}
 
 {% block content%}
-    {% if returnCorrect %}
-        {% for recording in returnCorrect %}
-            <p>{{ recording.book.title }} 歸還成功</p>
-        {% endfor %}
-    {% endif %}
+
+    <div class='alert alert-warning'>{{ message }}</div>
+
 {% endblock content %}

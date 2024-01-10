@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {%block title%}歡迎光臨 圖書館{% endblock title %}
 {% block headmessage %}
-<h3 style='font-family:微軟正黑體;'>還書</h3>
+<h3 style='font-family:微軟正黑體;'>歸還書籍</h3>
 <a style='font-family:微軟正黑體;' href="/">回首頁</a>
 {%endblock headmessage%}
 {% block content%}
 <form action="/returnBookPage/" method="post">
     {% csrf_token %}
-    <input type="text" name="username" placeholder="輸入還書用戶帳號...">
-    <button type="submit">搜索</button>
+    <input type="text" name="username" placeholder="輸入帳號...">
+    <button type="submit">尋找</button>
 </form>
     {% if returnList %}
         <table class="table table-hover">

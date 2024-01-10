@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mytext.models import Post,Borrow_book
+from mytext.models import Post,Borrow_book,Comment
 from datetime import datetime
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -140,7 +140,7 @@ def borrow_book(request,post_id):
 
         book = Post.objects.get(id=post_id)
         if Borrow_book.objects.filter(readerID=request.user, returned=False, title=book) :
-            message = "此書以借閱，請歸還後再借閱!"
+            message = "此書已借閱，請歸還後再借閱!"
             text='重複借閱'
             return render(request, 'borrow.html',locals())
         elif book.quantity==0:
@@ -162,7 +162,7 @@ def borrow_book(request,post_id):
                 book.save()
                 return render(request, 'borrow.html', {'borrow_book':borrow_books,'message':"借閱成功", 'text':"借書"})
     else:
-        return render(request, 'login.html', locals())
+        return render(request, 'borrow.html', {'message':"請先登入後再借閱", 'text':"尚未登入"})
 
 from django.contrib.auth.decorators import login_required
 
@@ -178,36 +178,30 @@ def getBorrowListByUser(request):
     return render(request, 'borrowbook.html', locals())
 
 #還書
-def returnBook(request, return_id):
-    if request.user =='POST':
-        returnBook=request.POST.getlist('return_books')
-        returnCorrect = []
-        u = None
-        for record in returnBook:
-            record = Borrow_book.objects.get(id=record)
-            record.is_returned=True
-            record.actual_return_date=timezone.now()
-            returnCorrect.append(record)
-            record.save()
-            record.book.available_quantity += 1
-            record.book.save()
-            u=record.user
-        return render(request, 'returnBook.html',{'returnCorrect':returnCorrect,'u':u})
+def returnBook(request):
+    if request.method=='POST':
+        returnBookList=request.POST.getlist('return_books')
+        for recordingId in returnBookList:
+            recording=Borrow_book.objects.get(id=recordingId)
+            recording.returned=True
+            recording.save()
+            recording.title.quantity += 1
+            recording.title.save()
+        return render(request, 'returnBookPage.html',locals())
     else:
-        return redirect('/')
+        return redirect('/returnBookPage/')
 
 def returnBookPage(request):
-    if request.method=='POST':
-        name=request.POST.get('username')
-        if User.objects.filter(username=name).exists():
-            user=User.objects.get(username=request.POST.get('username'))
-            returnList=Borrow_book .objects.filter(user=user, is_returned=False).order_by('due_date')
-            return render(request,'returnBookPage.html',locals())
-        else:
-            return render(request,'returnBookPage.html',{'msg':'查無此用戶'})
-
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        try:
+            user = User.objects.get(username=name)
+        except User.DoesNotExist:
+            return render(request, 'returnBookPage.html', {'msg': '查無此用戶'})
+        returnList = Borrow_book.objects.filter(readerID=user, returned=False).order_by('due_date')
+        return render(request, 'returnBookPage.html', {'user': user, 'returnList': returnList})
     else:
-        return render(request,'returnBookPage.html',{'msg':' '})
+        return render(request, 'returnBookPage.html', {'msg': ' '})
 
 #修改密碼
 def changePassword(request):
@@ -283,38 +277,6 @@ def bookModify(request, post_id):
     else:
         return redirect('/')
 
-def returnBookPage(request):
-    if request.method=='POST':
-        name=request.POST.get('username')
-        if User.objects.filter(username=name).exists():
-            user=User.objects.get(username=request.POST.get('username'))
-            returnList=borrow_book.objects.filter(user=user, is_returned=False).order_by('due_date')
-            return render(request,'returnBookPage.html',locals())
-        else:
-            return render(request,'returnBookPage.html',{'msg':'查無此用戶'})
-
-    else:
-        return render(request,'returnBookPage.html',{'msg':' '})
-
-def returnBook(request):
-    if request.method=='POST':
-        u=None
-        returnCorrect=[]
-        returnBookList=request.POST.getlist('return_books')
-        for recordingId in returnBookList:
-            recording=borrow_book.objects.get(id=recordingId)
-            recording.returned=True
-            recording.actual_return_date=timezone.now()
-            returnCorrect.append(recording)
-            recording.save()
-
-            recording.book.quantity += 1
-            recording.book.save()
-            u=recording.user
-        return render(request, 'returnBook.html',{'returnCorrect':returnCorrect,'u':u})
-    else:
-        return redirect('/returnBookPage/')
-
 def postPage(request, slug):
     post=Post.objects.filter(slug=slug)
     if post:
@@ -322,3 +284,19 @@ def postPage(request, slug):
         return render(request, 'postPage.html', locals())
     else:
         return redirect('/')
+    
+from django.shortcuts import get_object_or_404
+def addComment(request):
+    if request.method == 'POST':
+        post_title = request.POST.get('post')
+        text = request.POST.get('text')
+        post_instance = get_object_or_404(Post, title=post_title)
+        Comment.objects.create(
+            post=post_instance,
+            text=text,
+        )
+        message = '評論新增成功'
+        text = '評論新增'
+        return render(request, 'borrow.html', locals())
+    else:
+        return render(request, 'addComment.html')

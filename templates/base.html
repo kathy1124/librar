@@ -178,11 +178,13 @@
                 <a href="/" class="list-group-item">HOME</a>
                 <a href="{% url 'search' %}" class="list-group-item">搜尋書籍</a>
                 <a href="{% url 'show_all_post' %}" class="list-group-item">讀者評論</a>
-                <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
-                {% if request.user.is_staff %}
-                  <a href="{% url 'addBook' %}" class="list-group-item">新增書籍</a>
-                  <a href="{% url 'returnBookPage' %}" class="list-group-item">歸還書籍</a>
-                  <a href="{% url 'bookManagePage' %}" class="list-group-item">修改書籍</a>
+                {% if request.user.is_active %}
+                  <a href="{% url 'borrowList' %}" class="list-group-item">借閱紀錄</a>
+                  {% if request.user.is_staff %}
+                    <a href="{% url 'addBook' %}" class="list-group-item">新增書籍</a>
+                    <a href="{% url 'returnBookPage' %}" class="list-group-item">歸還書籍</a>
+                    <a href="{% url 'bookManagePage' %}" class="list-group-item">修改書籍</a>
+                  {% endif %} 
                 {% endif %}
                   <br/>
               </div>

@@ -24,6 +24,7 @@ urlpatterns = [
     path('post/<slug:slug>/', mv.postPage, name="postPage"),
     path('post', mv.show_all_post, name="show_all_post"),
     path('post/<int:post_id>/comments', mv.show_comments, name='show-comments'),
+    path('addComment/',mv.addComment,name='addComents'),
     path('postPage', mv.postPage, name="postPage"),
 
     path('register/', mv.register, name= 'register'),

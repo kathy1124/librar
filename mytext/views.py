@@ -138,22 +138,26 @@ from django.utils import timezone
 def borrow_book(request,book_id):
     if request.user.is_active:
         book = Post.objects.get(id=book_id)
-        quantity = int(book.quantity)
-        if quantity > 0:
-            due_date = timezone.now() + timezone.timedelta(days=40)
-            borrow_books = Borrow_book.objects.create(
-                readerID = request.user,
-                title = book,
-                borrow_date = timezone.now(),
-                due_date = due_date,
-                returned = False,
-            )
-            book.quantity -= 1
-            book.save()
-            return render(request, 'borrow.html', {'borrow_book':borrow_books,'message': "借閱成功"})
-        else:
-            message = "此書暫不可借"
+        if Borrow_book.objects.filter(readerID=request.user, returned=False, title=book) :
+            message = "此書以借閱，請歸還後再借閱!"
             return render(request, 'borrow.html',locals())
+        elif book.quantity==0:
+            message = "此書暫不可借，請先借閱別本書!"
+            return render(request, 'borrow.html',locals())
+        else:   
+            quantity = int(book.quantity)
+            if quantity > 0:
+                due_date = timezone.now() + timezone.timedelta(days=40)
+                borrow_books = Borrow_book.objects.create(
+                    readerID = request.user,
+                    title = book,
+                    borrow_date = timezone.now(),
+                    due_date = due_date,
+                    returned = False,
+                )
+                book.quantity -= 1
+                book.save()
+                return render(request, 'borrow.html', {'borrow_book':borrow_books,'message': "借閱成功"})
     else:
         return render(request, 'login.html', locals())
 
@@ -226,20 +230,16 @@ def addBook(request):
         slug=request.POST.get('slug')
         genre=request.POST.get('genre')
         author=request.POST.get('author')
-        condition=request.POST.get('condition')
         quantity=request.POST.get('quantity')
         body=request.POST.get('body')
-        pub_date=request.POST.get('pub_date')
-        post=Post.objects.create(
+        Post.objects.create(
             title=title,
             slug=slug,
             genre=genre,
             author=author,
-            condition=condition,
             quantity=quantity,
-            body=body,
-            pub_date=pub_date)
-        msg='書籍新增成功'
+            body=body)
+        message='書籍新增成功'
         return render(request, 'addBook.html', locals())
     else:
         return render(request, 'addBook.html')

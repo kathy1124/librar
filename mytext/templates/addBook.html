@@ -20,21 +20,11 @@
     </div>
     <div class="genre">
         <label for="genre">類型： </label>
-        <select id="genre" name="genre">
-            {% for genre in post %}
-                <option value="{{ request.genre }}">
-                    {{ genre}}
-                </option>
-            {% endfor %}
-        </select>
+        <input id="text" name="genre" id="">
     </div>
 		<div class="author">
 			<label for="author">作者： </label>
 			<input type="text" name="author" id="">
-		</div>
-		<div class="condition">
-			<label for="condition">狀態： </label>
-			<input type="text" name="condition" id="">
 		</div>
     <div class="quantity">
         <label for="quantity">庫存量： </label>
@@ -43,11 +33,7 @@
     <div class="body">
         <label for="body">介紹： </label>
         <textarea id="body" name="body" style="height: 300px; width: 700px;"></textarea>
-    </div>
-	<div class="pub_date">
-		<label for="pub_date">上架日期： </label>
-		<input type="date" name="pub_date" id="">
-	</div><br>
+    </div><br>
     <input type="submit" class="btn btn-outline-success" value="新增">
     <input type="reset" class="btn btn-outline-info" value="清除重填">
 </form>

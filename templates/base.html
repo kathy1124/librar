@@ -151,11 +151,11 @@
             <div class="card-header">
               {% if request.user.is_active %}
                   {% if request.user.is_superuser %}
-                      <h3>系統管理員：{{ user_name }}</h3>
+                      <h3>系統管理員：{{ request.user }}</h3>
                   {% elif request.user.is_staff %}
-                      <h3>圖書管理員：{{ user_name }}</h3>
+                      <h3>圖書管理員：{{ request.user }}</h3>
                   {% else %}
-                      <h3>帳號名稱:{{ user_name }}</h3>
+                      <h3>帳號名稱:{{ request.user }}</h3>
                   {% endif %}
                   <a href="{% url 'changePassword' %}">變更密碼</a>
                   <a href="{% url 'logout' %}">登出</a>
